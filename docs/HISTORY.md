@@ -325,3 +325,10 @@ Resultado:
 
 Próximo passo recomendado:
 - abrir Conversa 4 para validação do pacote Kaggle ou execução piloto no Kaggle.
+## Conversa 4 — Exportação para Kaggle e execução fragmentada
+
+- Criado script `scripts/build_kaggle_project_package.py` para gerar pacote ZIP limpo do projeto.
+- Definido pacote de saída em `dist/realmlp-tabarena-kaggle-package.zip`.
+- Documentado o processo em `docs/KAGGLE_EXPORT_PACKAGE.md`.
+- Garantidas exclusões de `.git/`, `.env`, `cache/`, `logs/`, `dist/`, checkpoints, bytecode Python e artefatos pesados de modelos.
+- Nenhum modelo ou notebook pesado foi executado localmente nesta etapa.
