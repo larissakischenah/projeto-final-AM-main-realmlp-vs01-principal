@@ -1,0 +1,50 @@
+{
+  "project": "RealMLP + TabArena",
+  "execution_type": "pilot_realmlp_group_model",
+  "runner": "src/pipeline/run_all.py",
+  "seed": 42,
+  "task_id": 363621,
+  "train_output": "/kaggle/working/results/pilot_realmlp_train_task_363621.csv",
+  "test_output": "/kaggle/working/results/pilot_realmlp_test_task_363621.csv",
+  "legacy_output": "/kaggle/working/results/pilot_realmlp_legacy_test_task_363621.csv",
+  "log_output": "/kaggle/working/results/pilot_realmlp_task_363621.log",
+  "results_dir": "/kaggle/working/results",
+  "ran_all_datasets": false,
+  "ran_autogluon_default": false,
+  "ran_autogluon_extreme": false,
+  "included_group_model": true,
+  "included_hpo": false,
+  "raw_model_identifier_for_team_model": "group_model",
+  "interpreted_model_name_for_team_model": "RealMLP",
+  "model_aliases": {
+    "group_model": "RealMLP",
+    "lightgbm": "LightGBM",
+    "xgboost": "XGBoost",
+    "catboost": "CatBoost"
+  },
+  "models_train_raw": [
+    "catboost",
+    "group_model",
+    "lightgbm",
+    "xgboost"
+  ],
+  "models_test_raw": [
+    "catboost",
+    "group_model",
+    "lightgbm",
+    "xgboost"
+  ],
+  "models_train_display": [
+    "CatBoost",
+    "LightGBM",
+    "RealMLP",
+    "XGBoost"
+  ],
+  "models_test_display": [
+    "CatBoost",
+    "LightGBM",
+    "RealMLP",
+    "XGBoost"
+  ],
+  "created_at_utc": "2026-06-06T18:26:06.011357+00:00"
+}
