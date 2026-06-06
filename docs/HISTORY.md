@@ -332,3 +332,25 @@ Próximo passo recomendado:
 - Documentado o processo em `docs/KAGGLE_EXPORT_PACKAGE.md`.
 - Garantidas exclusões de `.git/`, `.env`, `cache/`, `logs/`, `dist/`, checkpoints, bytecode Python e artefatos pesados de modelos.
 - Nenhum modelo ou notebook pesado foi executado localmente nesta etapa.
+
+## Kaggle pilot execution — task 363621
+
+- Criada branch `docs/kaggle-pilot-evidence` para registrar evidências dos pilotos executados no Kaggle.
+- Validado upload do pacote limpo como Kaggle Dataset.
+- Validado notebook piloto fragmentado com `src/pipeline/run_all.py`.
+- Executado piloto em um único dataset small: task_id `363621` (`blood-transfusion-service-center`).
+- Gerados CSVs separados de treino e teste em `/kaggle/working/results`.
+- Piloto 1 validou os baselines: LightGBM, XGBoost e CatBoost.
+- Piloto 2 validou o modelo do grupo via `--include-group-model`.
+- O identificador bruto `group_model` corresponde ao RealMLP/modelo oficial do grupo para fins de documentação, manifesto e relatório.
+- AutoGluon Default não foi executado nesta etapa.
+- AutoGluon Extreme não foi executado nesta etapa.
+- Execução completa dos 30 datasets não foi iniciada nesta etapa.
+- Evidências locais adicionadas em `results/kaggle_pilots/`.
+- Notebooks de execução piloto adicionados em `notebooks/kaggle_pilots/`.
+
+### Validação metodológica relacionada
+
+- `src/pipeline/split.py` mantém split estratificado 70/30 com `DEFAULT_TEST_SIZE = 0.30`, `DEFAULT_SEED = 42` e `stratify=y`.
+- A análise estatística principal permanece baseada em `results/raw_train.csv`, conforme registrado em `notebooks/04_demo_stats_regime.ipynb`.
+- `results/raw_test.csv` permanece reservado para análise complementar de generalização.

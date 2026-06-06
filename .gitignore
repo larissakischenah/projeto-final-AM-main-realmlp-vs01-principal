@@ -92,3 +92,6 @@ results/ag_models/
 
 # Runtime logs
 *.log
+
+# Pacotes locais gerados para upload no Kaggle
+/dist/
