@@ -200,7 +200,13 @@ def main() -> None:
                 flush=True,
             )
 
-        # checkpoint após cada dataset para não perder progresso em caso de falha
+            # checkpoint após cada modelo para não perder progresso parcial
+            pd.DataFrame(train_rows).to_csv(args.train_output, index=False)
+            pd.DataFrame(test_rows).to_csv(args.test_output, index=False)
+            if args.output is not None:
+                pd.DataFrame(test_rows).to_csv(args.output, index=False)
+
+        # checkpoint redundante ao fim do dataset para reforçar persistência
         pd.DataFrame(train_rows).to_csv(args.train_output, index=False)
         pd.DataFrame(test_rows).to_csv(args.test_output, index=False)
         if args.output is not None:

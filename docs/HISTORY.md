@@ -279,4 +279,20 @@ pelo template original.
 - Mantida compatibilidade legada com `--output`, que quando informado salva também as métricas de teste no caminho indicado.
 - Ajustado `notebooks/04_demo_stats_regime.ipynb` para usar `results/raw_train.csv` como base da análise estatística principal.
 - Preservado `results/raw_test.csv` como evidência complementar de generalização.
+## Conversa 2 — Preparação técnica dos runners para Kaggle
 
+Branch: `fix/kaggle-runners-readiness`
+
+Alterações planejadas/aplicadas:
+- Preparação do runner AutoGluon para execução no Kaggle sem execução pesada local.
+- Separação das saídas AutoGluon em métricas de treino e teste:
+  - `autogluon_train.csv`
+  - `autogluon_test.csv`
+- Manutenção de compatibilidade legada via `--output`, gravando métricas de teste quando solicitado.
+- Suporte explícito a execução por `--task-ids`, permitindo rodar datasets individualmente no Kaggle.
+- Checkpoint/resume por par `(task_id, model)`.
+- Diretório padrão de resultados em `/kaggle/working/results/` quando o ambiente Kaggle é detectado; caso contrário, `results/`.
+- AutoGluon Default com `time_limit=600` por padrão, salvo argumento explícito.
+- AutoGluon Extreme preparado tecnicamente com `time_limit=14400` por padrão, sem execução local.
+- Checkpoint mais frequente no runner geral `run_all.py`, salvando após cada modelo.
+- Validação prevista apenas com `--help`, `py_compile` e inspeções estruturais.

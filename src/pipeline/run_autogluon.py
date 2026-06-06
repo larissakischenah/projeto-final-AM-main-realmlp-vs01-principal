@@ -1,26 +1,34 @@
-"""Runner do AutoGluon (presets default e extreme) nos 30 datasets do TabArena.
+"""Runner do AutoGluon para execução no Kaggle.
 
-Uso:
-    # preset default (best_quality), todos os datasets
-    PYTHONUNBUFFERED=1 uv run python -u -m src.pipeline.run_autogluon --seed 42 2>&1 | tee results/autogluon.log
+Este runner foi preparado para:
+- executar datasets individualmente via --task-ids;
+- separar métricas de treino e teste;
+- fazer checkpoint/resume por par (task_id, model);
+- salvar resultados preferencialmente em /kaggle/working/results quando estiver no Kaggle;
+- usar time_limit=600 para AutoGluon Default, salvo argumento explícito;
+- evitar que uma falha isolada interrompa toda a execução quando --fail-fast não for usado.
 
-    # ambos os presets com time-limit explícito
-    PYTHONUNBUFFERED=1 uv run python -u -m src.pipeline.run_autogluon \\
-        --presets default extreme --time-limit 3600 2>&1 | tee results/autogluon.log
+Uso local leve, sem treinar:
+    uv run python -m src.pipeline.run_autogluon --help
 
-    # subset de datasets
-    PYTHONUNBUFFERED=1 uv run python -u -m src.pipeline.run_autogluon \\
-        --task-ids 363621 363685 2>&1 | tee results/autogluon_subset.log
+Uso Kaggle, AutoGluon Default em um dataset:
+    PYTHONUNBUFFERED=1 uv run python -u -m src.pipeline.run_autogluon \
+        --presets default --task-ids 32 \
+        2>&1 | tee /kaggle/working/results/autogluon_default_task_32.log
 
-Resume automático: se --output já existir, pares (task_id, model) já presentes são pulados.
-Modelos gravados em results/ag_models/<task_id>_<preset>/.
+Uso Kaggle, AutoGluon Extreme em um dataset:
+    PYTHONUNBUFFERED=1 uv run python -u -m src.pipeline.run_autogluon \
+        --presets extreme --task-ids 32 \
+        2>&1 | tee /kaggle/working/results/autogluon_extreme_task_32.log
 """
 
 from __future__ import annotations
 
 import argparse
 import time
+import traceback
 from pathlib import Path
+from typing import Any
 
 import numpy as np
 import pandas as pd
@@ -34,13 +42,23 @@ from src.pipeline.split import stratified_split
 _LABEL = "__target__"
 
 
-def _prepare_for_pytabkit(
+def _default_results_dir() -> Path:
+    """Usa /kaggle/working/results quando disponível; caso contrário, results/."""
+    kaggle_working = Path("/kaggle/working")
+    if kaggle_working.exists():
+        return kaggle_working / "results"
+    return Path("results")
+
+
+def _prepare_for_autogluon(
     X_train: pd.DataFrame, X_test: pd.DataFrame
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Prepara DataFrames para modelos pytabkit:
-    1. Converte CategoricalDtype → object (sklearn validation tenta cast para float64).
-    2. Imputa NaN: mediana para numérico, moda para categórico (object).
-    Fit nos dados de treino; mesmos valores aplicados no teste."""
+    """Prepara DataFrames sem vazamento de dados.
+
+    1. Converte CategoricalDtype para object.
+    2. Imputa NaN numérico com mediana do treino.
+    3. Imputa NaN categórico com moda do treino.
+    """
     X_train = X_train.copy()
     X_test = X_test.copy()
 
@@ -50,89 +68,101 @@ def _prepare_for_pytabkit(
 
     num_cols = X_train.select_dtypes(include="number").columns.tolist()
     cat_cols = X_train.select_dtypes(exclude="number").columns.tolist()
+
     if num_cols and X_train[num_cols].isna().any().any():
         fill = X_train[num_cols].median()
         X_train[num_cols] = X_train[num_cols].fillna(fill)
         X_test[num_cols] = X_test[num_cols].fillna(fill)
+
     if cat_cols and X_train[cat_cols].isna().any().any():
-        fill = X_train[cat_cols].mode().iloc[0]
-        X_train[cat_cols] = X_train[cat_cols].fillna(fill)
-        X_test[cat_cols] = X_test[cat_cols].fillna(fill)
+        fill = X_train[cat_cols].mode(dropna=True)
+        if not fill.empty:
+            fill_values = fill.iloc[0]
+            X_train[cat_cols] = X_train[cat_cols].fillna(fill_values)
+            X_test[cat_cols] = X_test[cat_cols].fillna(fill_values)
+
     return X_train, X_test
 
 
 def _label_encode_high_cardinality(
     X_train: pd.DataFrame, X_test: pd.DataFrame, max_card: int = 50
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Label-encoda colunas categóricas com cardinalidade > max_card.
+    """Label-encoda colunas categóricas de alta cardinalidade.
 
-    Aplicado exclusivamente no runner do AutoGluon (não afeta os modelos
-    pytabkit/baselines). Previne que o AutoGluon aplique OHE internamente
-    em colunas de alta cardinalidade, o que causaria explosão de features
-    e erro de OOM na GPU.
-
-    Datasets afetados nos 30 selecionados (threshold=50):
-      - Amazon_employee_access: RESOURCE (7518), MGR_ID (4243),
-        ROLE_FAMILY_DESC (2358), ROLE_DEPTNAME (449), ROLE_TITLE (343)
-      - Marketing_Campaign: Dt_Customer (663)
-      - HR_Analytics_Job_Change: city (123)
-
-    Fit exclusivamente no conjunto de treino; mesmos mapeamentos aplicados
-    ao teste para evitar vazamento de dados."""
+    Fit exclusivamente no treino; mesmos mapeamentos aplicados ao teste.
+    """
     X_train = X_train.copy()
     X_test = X_test.copy()
+
     for col in X_train.select_dtypes(include=["object", "category"]).columns:
-        if X_train[col].nunique() > max_card:
+        if X_train[col].nunique(dropna=True) > max_card:
             cats = {v: i for i, v in enumerate(sorted(X_train[col].dropna().unique()))}
             X_train[col] = X_train[col].map(cats).fillna(-1).astype(int)
             X_test[col] = X_test[col].map(cats).fillna(-1).astype(int)
+
     return X_train, X_test
 
 
-def _evaluate_autogluon(
-    predictor,
-    preset_str: str,
-    time_limit: int | None,
-    X_train: pd.DataFrame,
-    y_train: np.ndarray,
-    X_test: pd.DataFrame,
-    y_test: np.ndarray,
+def _predict_proba_aligned(
+    predictor: Any,
+    X: pd.DataFrame,
+    classes: np.ndarray,
+) -> np.ndarray:
+    """Obtém predict_proba com colunas alinhadas à ordem de classes."""
+    y_proba_df = predictor.predict_proba(X)
+
+    try:
+        return y_proba_df[list(classes)].to_numpy()
+    except KeyError:
+        return y_proba_df.to_numpy()
+
+
+def _evaluate_fitted_autogluon(
+    predictor: Any,
+    X: pd.DataFrame,
+    y: np.ndarray,
+    classes: np.ndarray,
+    fit_time_s: float,
 ) -> EvaluationResult:
-    train_df = X_train.copy()
-    train_df[_LABEL] = y_train
-
+    """Avalia AutoGluon já treinado em uma partição específica."""
     t0 = time.perf_counter()
-    predictor.fit(train_df, presets=preset_str, time_limit=time_limit)
-    fit_time_s = time.perf_counter() - t0
-
-    t0 = time.perf_counter()
-    y_pred = predictor.predict(X_test).to_numpy()
-    y_proba_df = predictor.predict_proba(X_test)
+    y_pred = predictor.predict(X).to_numpy()
+    y_proba = _predict_proba_aligned(predictor, X, classes)
     predict_time_s = time.perf_counter() - t0
 
-    classes = np.unique(y_train)
-    # Reordena colunas para coincidir com a ordem de np.unique (esperada por roc_auc_score)
-    try:
-        y_proba = y_proba_df[list(classes)].to_numpy()
-    except KeyError:
-        y_proba = y_proba_df.to_numpy()
-
     if classes.size == 2:
-        auc = float(roc_auc_score(y_test, y_proba[:, 1]))
+        auc = float(roc_auc_score(y, y_proba[:, 1]))
     else:
-        auc = float(roc_auc_score(y_test, y_proba, multi_class="ovo", labels=classes))
+        auc = float(roc_auc_score(y, y_proba, multi_class="ovo", labels=classes))
 
     return EvaluationResult(
         auc_ovo=auc,
-        accuracy=float(accuracy_score(y_test, y_pred)),
-        g_mean=g_mean_score(y_test, y_pred),
-        cross_entropy=float(log_loss(y_test, y_proba, labels=classes)),
+        accuracy=float(accuracy_score(y, y_pred)),
+        g_mean=g_mean_score(y, y_pred),
+        cross_entropy=float(log_loss(y, y_proba, labels=classes)),
         fit_time_s=fit_time_s,
         predict_time_s=predict_time_s,
     )
 
 
+def _checkpoint(
+    train_rows: list[dict],
+    test_rows: list[dict],
+    train_output: Path,
+    test_output: Path,
+    legacy_output: Path | None,
+) -> None:
+    """Grava checkpoints de treino/teste e saída legada opcional."""
+    pd.DataFrame(train_rows).to_csv(train_output, index=False)
+    pd.DataFrame(test_rows).to_csv(test_output, index=False)
+
+    if legacy_output is not None:
+        pd.DataFrame(test_rows).to_csv(legacy_output, index=False)
+
+
 def parse_args() -> argparse.Namespace:
+    results_dir = _default_results_dir()
+
     p = argparse.ArgumentParser(description="Executa AutoGluon nos datasets do TabArena.")
     p.add_argument("--seed", type=int, default=42)
     p.add_argument(
@@ -140,13 +170,16 @@ def parse_args() -> argparse.Namespace:
         nargs="+",
         default=["default"],
         choices=["default", "extreme"],
-        help="presets AutoGluon a executar (default=best_quality, extreme=extreme_quality)",
+        help="presets AutoGluon a executar: default=best_quality, extreme=extreme_quality",
     )
     p.add_argument(
         "--time-limit",
         type=int,
         default=None,
-        help="time_limit_seconds por dataset×preset (sobrescreve o default do preset)",
+        help=(
+            "time_limit em segundos por dataset×preset; se omitido, "
+            "default usa 600s e extreme usa 14400s"
+        ),
     )
     p.add_argument(
         "--task-ids",
@@ -156,33 +189,73 @@ def parse_args() -> argparse.Namespace:
         help="lista opcional de task IDs; se omitido usa RECOMMENDED_TASK_IDS",
     )
     p.add_argument(
+        "--train-output",
+        type=Path,
+        default=results_dir / "autogluon_train.csv",
+        help="CSV de saída com métricas no conjunto de treinamento",
+    )
+    p.add_argument(
+        "--test-output",
+        type=Path,
+        default=results_dir / "autogluon_test.csv",
+        help="CSV de saída com métricas no conjunto de teste",
+    )
+    p.add_argument(
         "--output",
         type=Path,
-        default=Path("results/autogluon.csv"),
-        help="CSV de saída (checkpoint após cada resultado)",
+        default=None,
+        help="compatibilidade legada: se informado, também salva métricas de teste neste caminho",
+    )
+    p.add_argument(
+        "--models-dir",
+        type=Path,
+        default=results_dir / "ag_models",
+        help="diretório para modelos AutoGluon",
+    )
+    p.add_argument(
+        "--fail-fast",
+        action="store_true",
+        help="interrompe a execução na primeira falha; por padrão, registra e segue",
     )
     return p.parse_args()
 
 
 def main() -> None:
     args = parse_args()
-    args.output.parent.mkdir(parents=True, exist_ok=True)
+
+    args.train_output.parent.mkdir(parents=True, exist_ok=True)
+    args.test_output.parent.mkdir(parents=True, exist_ok=True)
+    args.models_dir.mkdir(parents=True, exist_ok=True)
+    if args.output is not None:
+        args.output.parent.mkdir(parents=True, exist_ok=True)
 
     task_ids = args.task_ids or RECOMMENDED_TASK_IDS
     n = len(task_ids)
     total_runs = n * len(args.presets)
 
-    # Resume: carrega resultados já gravados para pular pares concluídos
+    train_rows: list[dict] = []
+    test_rows: list[dict] = []
     done: set[tuple[int, str]] = set()
-    rows: list[dict] = []
-    if args.output.exists():
-        existing = pd.read_csv(args.output)
-        rows = existing.to_dict("records")
-        done = {(int(r["task_id"]), str(r["model"])) for r in rows}
+
+    if args.train_output.exists():
+        train_rows = pd.read_csv(args.train_output).to_dict("records")
+
+    if args.test_output.exists():
+        test_rows = pd.read_csv(args.test_output).to_dict("records")
+
+    if train_rows and test_rows:
+        done_train = {(int(r["task_id"]), str(r["model"])) for r in train_rows}
+        done_test = {(int(r["task_id"]), str(r["model"])) for r in test_rows}
+        done = done_train & done_test
         if done:
-            print(f"Resume: {len(done)} resultado(s) já presentes em {args.output}", flush=True)
+            print(
+                f"Resume: {len(done)} par(es) task_id/model já presentes em "
+                f"{args.train_output} e {args.test_output}",
+                flush=True,
+            )
 
     run_no = 0
+
     for i, task_id in enumerate(task_ids, 1):
         for preset in args.presets:
             run_no += 1
@@ -191,54 +264,157 @@ def main() -> None:
 
             if (task_id, model_key) in done:
                 print(
-                    f"[{run_no}/{total_runs}  {pct:3d}%] SKIP {task_id} / {preset} (já concluído)",
+                    f"[{run_no}/{total_runs} {pct:3d}%] SKIP task_id={task_id} "
+                    f"model={model_key} (checkpoint encontrado)",
                     flush=True,
                 )
                 continue
 
-            ds = load_task(task_id)
-            print(
-                f"\n[{run_no}/{total_runs}  {pct:3d}%] {ds.name}"
-                f"  preset={preset}  n={ds.n_samples}  cls={ds.n_classes}  reg={ds.regime}",
-                flush=True,
-            )
+            try:
+                ds = load_task(task_id)
+                print(
+                    f"\n[{run_no}/{total_runs} {pct:3d}%] "
+                    f"task_id={task_id} dataset={ds.name} preset={preset} "
+                    f"n={ds.n_samples} cls={ds.n_classes} reg={ds.regime}",
+                    flush=True,
+                )
 
-            X_train, X_test, y_train, y_test = stratified_split(ds.X, ds.y, seed=args.seed)
-            X_train, X_test = _prepare_for_pytabkit(X_train, X_test)
-            X_train, X_test = _label_encode_high_cardinality(X_train, X_test)
+                X_train, X_test, y_train, y_test = stratified_split(ds.X, ds.y, seed=args.seed)
+                X_train, X_test = _prepare_for_autogluon(X_train, X_test)
+                X_train, X_test = _label_encode_high_cardinality(X_train, X_test)
 
-            model_path = str(Path("results/ag_models") / f"{task_id}_{preset}")
-            predictor, preset_str, time_limit = build_autogluon(
-                label=_LABEL,
-                seed=args.seed,
-                preset=preset,
-                time_limit_seconds=args.time_limit,
-                path=model_path,
-                n_classes=ds.n_classes,
-            )
+                model_path = args.models_dir / f"{task_id}_{preset}"
+                predictor, preset_str, time_limit = build_autogluon(
+                    label=_LABEL,
+                    seed=args.seed,
+                    preset=preset,
+                    time_limit_seconds=args.time_limit,
+                    path=str(model_path),
+                    n_classes=ds.n_classes,
+                )
 
-            metrics = _evaluate_autogluon(
-                predictor, preset_str, time_limit,
-                X_train, y_train, X_test, y_test,
-            )
+                train_df = X_train.copy()
+                train_df[_LABEL] = y_train
 
-            row = {"task_id": task_id, "dataset": ds.name, "model": model_key}
-            row.update(metrics.to_dict())
-            rows.append(row)
+                print(
+                    f"  -> fit AutoGluon preset={preset_str} "
+                    f"time_limit={time_limit}s path={model_path}",
+                    flush=True,
+                )
 
-            print(
-                f"  -> AUC={metrics.auc_ovo:.4f}"
-                f"  ACC={metrics.accuracy:.4f}"
-                f"  G-Mean={metrics.g_mean:.4f}"
-                f"  CE={metrics.cross_entropy:.4f}"
-                f"  time={metrics.fit_time_s + metrics.predict_time_s:.1f}s",
-                flush=True,
-            )
+                t0 = time.perf_counter()
+                try:
+                    predictor.fit(train_df, presets=preset_str, time_limit=time_limit)
+                except Exception as fit_exc:
+                    # AutoGluon pode deixar artefato parcial válido quando o limite de tempo
+                    # ou algum modelo interno falha. Tentamos avaliar antes de descartar.
+                    print(
+                        f"  !! fit lançou exceção: {type(fit_exc).__name__}: {fit_exc}",
+                        flush=True,
+                    )
+                    print("  !! tentando usar resultado parcial, se houver modelo válido...", flush=True)
+                    try:
+                        leaderboard = predictor.leaderboard(silent=True)
+                        if leaderboard is None or leaderboard.empty:
+                            raise RuntimeError("leaderboard vazio; sem modelo parcial válido") from fit_exc
+                    except Exception as partial_exc:
+                        print(
+                            f"  !! sem resultado parcial válido: "
+                            f"{type(partial_exc).__name__}: {partial_exc}",
+                            flush=True,
+                        )
+                        raise
 
-            # checkpoint imediato para não perder progresso
-            pd.DataFrame(rows).to_csv(args.output, index=False)
+                fit_time_s = time.perf_counter() - t0
+                classes = np.unique(np.concatenate([y_train, y_test]))
 
-    print(f"\nResultados gravados em {args.output}  ({len(rows)} linhas)", flush=True)
+                train_metrics = _evaluate_fitted_autogluon(
+                    predictor=predictor,
+                    X=X_train,
+                    y=y_train,
+                    classes=classes,
+                    fit_time_s=fit_time_s,
+                )
+                test_metrics = _evaluate_fitted_autogluon(
+                    predictor=predictor,
+                    X=X_test,
+                    y=y_test,
+                    classes=classes,
+                    fit_time_s=fit_time_s,
+                )
+
+                base_row = {
+                    "task_id": task_id,
+                    "dataset": ds.name,
+                    "model": model_key,
+                    "preset": preset,
+                    "time_limit_s": time_limit,
+                }
+
+                train_row = dict(base_row)
+                train_row.update(train_metrics.to_dict())
+                train_rows.append(train_row)
+
+                test_row = dict(base_row)
+                test_row.update(test_metrics.to_dict())
+                test_rows.append(test_row)
+
+                print(
+                    f"  -> TRAIN AUC={train_metrics.auc_ovo:.4f} "
+                    f"ACC={train_metrics.accuracy:.4f} "
+                    f"G-Mean={train_metrics.g_mean:.4f} "
+                    f"CE={train_metrics.cross_entropy:.4f}",
+                    flush=True,
+                )
+                print(
+                    f"  -> TEST  AUC={test_metrics.auc_ovo:.4f} "
+                    f"ACC={test_metrics.accuracy:.4f} "
+                    f"G-Mean={test_metrics.g_mean:.4f} "
+                    f"CE={test_metrics.cross_entropy:.4f} "
+                    f"time={test_metrics.total_time_s:.1f}s",
+                    flush=True,
+                )
+
+                _checkpoint(
+                    train_rows=train_rows,
+                    test_rows=test_rows,
+                    train_output=args.train_output,
+                    test_output=args.test_output,
+                    legacy_output=args.output,
+                )
+
+            except Exception:
+                print(
+                    f"  !! FALHA task_id={task_id} model={model_key}. "
+                    "Execução continuará porque --fail-fast não foi usado.",
+                    flush=True,
+                )
+                traceback.print_exc()
+
+                _checkpoint(
+                    train_rows=train_rows,
+                    test_rows=test_rows,
+                    train_output=args.train_output,
+                    test_output=args.test_output,
+                    legacy_output=args.output,
+                )
+
+                if args.fail_fast:
+                    raise
+
+    print(
+        f"\nResultados de treino gravados em {args.train_output} ({len(train_rows)} linhas)",
+        flush=True,
+    )
+    print(
+        f"Resultados de teste gravados em {args.test_output} ({len(test_rows)} linhas)",
+        flush=True,
+    )
+    if args.output is not None:
+        print(
+            f"Compatibilidade legada: métricas de teste também gravadas em {args.output}",
+            flush=True,
+        )
 
 
 if __name__ == "__main__":

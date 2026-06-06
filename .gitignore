@@ -64,3 +64,31 @@ uv.lock
 *.fls
 *.fdb_latexmk
 *.synctex.gz
+
+# Python runtime artifacts
+__pycache__/
+*.py[cod]
+
+# Local/OpenML/TabArena caches
+cache/
+
+# AutoGluon trained models and heavy artifacts
+AutogluonModels/
+results/ag_models/
+
+# Runtime logs
+*.log
+
+# Python runtime artifacts
+__pycache__/
+*.py[cod]
+
+# Local/OpenML/TabArena caches
+cache/
+
+# AutoGluon trained models and heavy artifacts
+AutogluonModels/
+results/ag_models/
+
+# Runtime logs
+*.log
