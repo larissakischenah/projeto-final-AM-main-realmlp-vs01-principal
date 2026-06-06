@@ -1,0 +1,66 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Resultados experimentais
+results/*.log
+results/ag_models/
+*.csv.gz
+*.parquet
+AutogluonModels/
+
+# Pesos de foundation models
+*.ckpt
+*.pt
+*.pth
+
+# Logs e arquivos temporários
+*.log
+*.tmp
+*.temp
+*.bak
+*.orig
+*.swp
+*.swo
+*~
+nohup.out
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+.bash_history
+
+# Variáveis de ambiente (podem conter credenciais)
+.env
+.env.*
+
+# Configurações locais de ferramentas de desenvolvimento
+.dev-tools/
+.local-config/
+
+# Lock files gerados (não versionados neste projeto)
+uv.lock
+
+# IDE
+.idea/
+.vscode/
+
+# LaTeX (auxiliares de compilação)
+*.aux
+*.out
+*.toc
+*.nav
+*.snm
+*.vrb
+*.fls
+*.fdb_latexmk
+*.synctex.gz

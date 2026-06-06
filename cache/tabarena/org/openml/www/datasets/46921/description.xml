@@ -1,0 +1,29 @@
+<oml:data_set_description xmlns:oml="http://openml.org/openml">
+  <oml:id>46921</oml:id>
+  <oml:name>diabetes</oml:name>
+  <oml:version>7</oml:version>
+  <oml:description>This dataset was curated for [TabArena](https://tabarena.ai/) by the TabArena team
+as part of the [TabArena Tabular ML IID Study](https://tabarena.ai/data-tabular-ml-iid-study).
+For more details on the study, see our [paper](https://tabarena.ai/paper-tabular-ml-iid-study).
+
+**Dataset Focus**: This dataset shall be used for evaluating predictive machine
+learning models for independent and identically distributed tabular data. The
+intended task is classification.
+
+---
+#### Dataset Metadata
+- **Licence:** CC0: Public Domain
+- **Original Data Source:** Original UCI source is lost, backup on [OpenML](https://www.openml.org/search?type=data&amp;sort=runs&amp;id=37) and [Kaggle](https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database).
+- **Reference (please cite)**: Smith, Jack W., et al. 'Using the ADAP learning algorithm to forecast the onset of diabetes mellitus.' Proceedings of the annual symposium on computer application in medical care. 1988. https://pmc.ncbi.nlm.nih.gov/articles/PMC2245318/
+- **Dataset Year:** 1988
+- **Dataset Description:** see the reference and the original data source for details.
+
+#### Curation comments by the TabArena team (for code see the [page of the study](https://tabarena.ai/data-tabular-ml-iid-study)):
+- We renamed the class variable &quot;Outcome&quot; to &quot;TestedPositiveForDiabetes&quot; and replaced 1 with yes, and 0 with no.</oml:description>
+  <oml:description_version>1</oml:description_version>
+  <oml:format>arff</oml:format>
+  <oml:creator>See original data source.</oml:creator>  <oml:contributor>TabArena Team</oml:contributor>   <oml:collection_date>1988</oml:collection_date>  <oml:upload_date>2025-04-30T20:16:05</oml:upload_date>
+  <oml:language>English</oml:language>  <oml:licence>CC0: Public Domain</oml:licence>  <oml:url>https://openml.org/data/v1/download/22125232/diabetes.arff</oml:url>
+  <oml:parquet_url>https://data.openml.org/datasets/0004/46921/dataset_46921.pq</oml:parquet_url>  <oml:file_id>22125232</oml:file_id>  <oml:default_target_attribute>TestedPositiveForDiabetes</oml:default_target_attribute>      <oml:version_label>tabular-ml-iid-study-0.0.1</oml:version_label>  <oml:citation>Smith, Jack W., et al. 'Using the ADAP learning algorithm to forecast the onset of diabetes mellitus.' Proceedings of the annual symposium on computer application in medical care. 1988. https://pmc.ncbi.nlm.nih.gov/articles/PMC2245318/</oml:citation>    <oml:visibility>public</oml:visibility>  <oml:original_data_url>See Description</oml:original_data_url>  <oml:paper_url>https://tabarena.ai/paper-tabular-ml-iid-study</oml:paper_url>    <oml:status>active</oml:status>
+  <oml:processing_date>2025-04-30 20:16:29</oml:processing_date>      <oml:md5_checksum>ddedbab6af35854821113175f6d37863</oml:md5_checksum>
+</oml:data_set_description>

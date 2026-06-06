@@ -1,0 +1,314 @@
+% =============================================================================
+% Templaté Beamer dos slides de apresentação final do Projeto de Aprendizagem
+% de Máquina (pós-graduação).
+% Alvo: 20 minutos cronometrados, em dois blocos de 10 minutos.
+% Cerca de 21 frames sugeridos.
+% Compilar com: pdflatex slides.tex (duas passadas).
+% =============================================================================
+\documentclass[aspectratio=169,11pt]{beamer}
+
+% Tema padrao (estavel). Caso queira metropolis, descomente:
+% \usetheme{metropolis}
+\usetheme{Madrid}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazilian]{babel}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{xcolor}
+
+\definecolor{cinazul}{RGB}{0, 51, 102}
+
+\title{Projeto Final - Aprendizagem de Máquina (pós)}
+\subtitle{Modelo: \textbf{[NOME DO MODELO]}}
+\author{Grupo: \textbf{[INTEGRANTES]}}
+\institute{2026.1}
+\date{Apresentação}
+
+\begin{document}
+
+% Slide 1: capa
+% Apresenta: integrante 1
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% Slide 2: agenda
+% Apresenta: integrante 1
+\begin{frame}{Agenda}
+    \textbf{Etapa 1 - Fundamentação teórica do modelo (10 minutos)}
+    \begin{itemize}
+        \item Motivação e intuição
+        \item Arquitetura e formulação
+        \item Complexidade e hiperparâmetros
+        \item Posicionamento na literatura tabular SOTA
+    \end{itemize}
+    \textbf{Etapa 2 - Estudo experimental (10 minutos)}
+    \begin{itemize}
+        \item Métodologia (30 datasets do TabArena, baselines + AutoGluon)
+        \item Resultados, ranking, diagrama de diferença crítica
+        \item Comparação Bayesiana com ROPE e análise por regime
+        \item Custo vs desempenho e conclusões
+    \end{itemize}
+\end{frame}
+
+% =====================================================================
+% ETAPA 1 - 10 minutos
+% =====================================================================
+
+% Slide 3: motivação
+% Apresenta: integrante 2
+\begin{frame}{Etapa 1: motivação do problema}
+    \begin{itemize}
+        \item Classificação tabular ainda e dominada por modelos baseados em árvores.
+        \item Novos paradigmas (foundation models, MLPs modernas, RNAs recursivas) prometem ganhos.
+        \item \textbf{Pergunta:} em quais regimes o modelo X e competitivo?
+    \end{itemize}
+    \vspace{0.4em}
+    \footnotesize Comparação sistematica e respostas baseadas em 30 datasets do TabArena-v0.1.
+\end{frame}
+
+% Slide 4: intuição
+% Apresenta: integrante 2
+\begin{frame}{Etapa 1: intuição do modelo}
+    \begin{columns}[T,onlytextwidth]
+        \column{0.55\textwidth}
+        \begin{itemize}
+            \item Ideia central em uma frase: [...].
+            \item Diferenca em relação aos baselines: [...].
+            \item Garantia teórica ou heuristica que sustenta a ideia: [...].
+        \end{itemize}
+        \column{0.45\textwidth}
+        % \includegraphics[width=\linewidth]{caminho/figura_conceitual.png}
+        \centering [diagrama conceitual]
+    \end{columns}
+\end{frame}
+
+% Slide 5: arquitetura
+% Apresenta: integrante 2
+\begin{frame}{Etapa 1: arquitetura}
+    \centering
+    % \includegraphics[width=0.85\textwidth]{caminho/diagrama_arquitetura.png}
+    [diagrama de blocos da arquitetura]
+    \\[0.4em]
+    \footnotesize Componentes principais: [bloco A], [bloco B], [bloco C].
+\end{frame}
+
+% Slide 6: formulação
+% Apresenta: integrante 3
+\begin{frame}{Etapa 1: formulação matemática}
+    \begin{itemize}
+        \item Função de perda: [...]
+        \item Regularização: [...]
+        \item Etapa de inferência: [...]
+    \end{itemize}
+    \vspace{0.3em}
+    \footnotesize Atalhos notacionais e variaveis na formulação podem ser detalhados no relatório.
+\end{frame}
+
+% Slide 7: complexidade e memória
+% Apresenta: integrante 3
+\begin{frame}{Etapa 1: complexidade computacional}
+    \footnotesize
+    \begin{tabular}{l c c c}
+        \toprule
+        \textbf{Operacao} & \textbf{Tempo} & \textbf{Memória} & \textbf{Observação} \\
+        \midrule
+        Treino   & O(...) & O(...) & [crescimento com n e p] \\
+        Inferência & O(...) & O(...) & [latência tipica] \\
+        \bottomrule
+    \end{tabular}
+    \vspace{0.5em}
+    \\
+    Pico de memória observado: [valor em GB] em datasets do regime grande.
+\end{frame}
+
+% Slide 8: hiperparâmetros
+% Apresenta: integrante 3
+\begin{frame}{Etapa 1: hiperparâmetros principais}
+    \footnotesize
+    \begin{tabular}{l p{4cm} p{4.5cm}}
+        \toprule
+        \textbf{Hiperparâmetro} & \textbf{Faixa de busca (Optuna)} & \textbf{Efeito esperado} \\
+        \midrule
+        {}[hp1] & [...] & [trade-off viés-variância] \\
+        {}[hp2] & [...] & [efeito sobre tempo de treino] \\
+        {}[hp3] & [...] & [...] \\
+        \bottomrule
+    \end{tabular}
+\end{frame}
+
+% Slide 9: posicionamento SOTA
+% Apresenta: integrante 4
+\begin{frame}{Etapa 1: posicionamento na literatura tabular SOTA}
+    \begin{itemize}
+        \item 2023: [trabalho A].
+        \item 2024: [trabalho B] (NeurIPS) e [trabalho C].
+        \item 2025: [trabalho D] (ICLR), [trabalho E] e o modelo X.
+        \item 2026: trabalhos correlatos em desenvolvimento.
+    \end{itemize}
+    \vspace{0.3em}
+    \footnotesize O modelo X se diferencia por: [diferenciador 1], [diferenciador 2].
+\end{frame}
+
+% Slide 10: limites teóricos
+% Apresenta: integrante 4
+\begin{frame}{Etapa 1: limites teóricos do modelo}
+    \begin{itemize}
+        \item Restrições de tamanho (n maximo, p maximo).
+        \item Suposições sobre os dados (IID, ausência de ruído estrutural, etc.).
+        \item Casos onde o modelo não se aplica ou degrada de forma previsivel.
+    \end{itemize}
+\end{frame}
+
+% =====================================================================
+% ETAPA 2 - 10 minutos
+% =====================================================================
+
+% Slide 11: métodologia
+% Apresenta: integrante 5
+\begin{frame}{Etapa 2: métodologia experimental}
+    \begin{itemize}
+        \item \textbf{Datasets:} 30 do TabArena-v0.1 (10 + 10 + 10 por regime de tamanho).
+        \item \textbf{Split:} 70/30 estratificado por classe, seed fixa.
+        \item \textbf{Busca:} Optuna (TPE) com validação cruzada no treino.
+        \item \textbf{Métricas:} AUC OvO, ACC, G-Mean, Cross-Entropy, tempo total.
+        \item \textbf{Concorrentes:} 9 modelos atribuíveis + 3 baselines + AutoGluon default e extreme 4h.
+    \end{itemize}
+\end{frame}
+
+% Slide 12: resultados gerais
+% Apresenta: integrante 5
+\begin{frame}{Etapa 2: resultados gerais}
+    \footnotesize
+    \begin{tabular}{l c c c}
+        \toprule
+        \textbf{Sistema} & \textbf{AUC OvO} & \textbf{Ranking médio} & \textbf{Tempo (s)} \\
+        \midrule
+        Modelo do grupo      & 0,xx $\pm$ 0,0xx & x,x & xxx \\
+        LightGBM TD          & 0,xx $\pm$ 0,0xx & x,x & xxx \\
+        CatBoost TD          & 0,xx $\pm$ 0,0xx & x,x & xxx \\
+        XGBoost TD           & 0,xx $\pm$ 0,0xx & x,x & xxx \\
+        AutoGluon default    & 0,xx $\pm$ 0,0xx & x,x & xxx \\
+        AutoGluon extreme 4h & 0,xx $\pm$ 0,0xx & x,x & xxx \\
+        \bottomrule
+    \end{tabular}
+    \vspace{0.3em}
+    \\
+    \footnotesize Posição do modelo do grupo no ranking: [x de 15].
+\end{frame}
+
+% Slide 13: diagrama de diferença crítica
+% Apresenta: integrante 5
+\begin{frame}{Etapa 2: ranking médio e diagrama de diferença crítica}
+    \centering
+    % \includegraphics[width=0.9\textwidth]{caminho/cd_diagram.png}
+    [diagrama de diferença crítica - autorank, post-hoc Nemenyi]
+    \\[0.4em]
+    \footnotesize Friedman p = [valor]; grupos estatísticamente equivalentes em destaque.
+\end{frame}
+
+% Slide 14: comparação Bayesiana com ROPE
+% Apresenta: integrante 4
+\begin{frame}{Etapa 2: comparação Bayesiana (signed-rank com ROPE)}
+    \footnotesize
+    \begin{tabular}{l c c c}
+        \toprule
+        \textbf{Comparação} & \textbf{p(modelo X melhor)} & \textbf{p(equivalente)} & \textbf{p(pior)} \\
+        \midrule
+        Modelo X vs LightGBM TD       & 0,xx & 0,xx & 0,xx \\
+        Modelo X vs CatBoost TD       & 0,xx & 0,xx & 0,xx \\
+        Modelo X vs XGBoost TD        & 0,xx & 0,xx & 0,xx \\
+        Modelo X vs AutoGluon default & 0,xx & 0,xx & 0,xx \\
+        Modelo X vs AutoGluon extreme & 0,xx & 0,xx & 0,xx \\
+        \bottomrule
+    \end{tabular}
+    \\[0.3em]
+    ROPE = 0,01 em AUC OvO; gerado por \texttt{baycomp}.
+\end{frame}
+
+% Slide 15: análise por regime (eixos 1 e 2)
+% Apresenta: integrante 3
+\begin{frame}{Etapa 2: análise por regime (tamanho e número de classes)}
+    \begin{columns}[T,onlytextwidth]
+        \column{0.5\textwidth}
+        \centering
+        % \includegraphics[width=\linewidth]{caminho/regime_tamanho.png}
+        [tamanho: pequeno, médio, grande]
+        \column{0.5\textwidth}
+        \centering
+        % \includegraphics[width=\linewidth]{caminho/regime_classes.png}
+        [n classes: binário vs multiclasse]
+    \end{columns}
+\end{frame}
+
+% Slide 16: análise por regime (eixos 3 e 4)
+% Apresenta: integrante 3
+\begin{frame}{Etapa 2: análise por regime (categoricas e missing)}
+    \begin{columns}[T,onlytextwidth]
+        \column{0.5\textwidth}
+        \centering
+        % \includegraphics[width=\linewidth]{caminho/regime_categoricas.png}
+        [proporção categorica: baixa vs alta]
+        \column{0.5\textwidth}
+        \centering
+        % \includegraphics[width=\linewidth]{caminho/regime_missing.png}
+        [missing: com NaN vs sem NaN]
+    \end{columns}
+\end{frame}
+
+% Slide 17: custo vs desempenho
+% Apresenta: integrante 2
+\begin{frame}{Etapa 2: custo vs desempenho}
+    \centering
+    % \includegraphics[width=0.85\textwidth]{caminho/scatter_tempo_auc.png}
+    [scatter: tempo total (eixo x) por AUC OvO media (eixo y) com os 15 sistemas]
+    \\[0.4em]
+    \footnotesize AutoGluon extreme define o teto prático; baselines TD, o piso barato.
+\end{frame}
+
+% Slide 18: casos de brilho e fracasso
+% Apresenta: integrante 1
+\begin{frame}{Etapa 2: onde o modelo brilha e onde fracassa}
+    \begin{itemize}
+        \item Brilha em: [tipo de regime] (exemplo: [dataset], delta = +0,0xx).
+        \item Fracassa em: [tipo de regime] (exemplo: [dataset], delta = -0,0xx).
+        \item Provavel causa: [propriedade do dado ou limite teórico identificado].
+    \end{itemize}
+\end{frame}
+
+% Slide 19: comparação honesta com AutoGluon
+% Apresenta: integrante 1
+\begin{frame}{Etapa 2: comparação honesta com AutoGluon}
+    \begin{itemize}
+        \item Quanto AutoML "compra" em termos de AUC OvO? Delta médio: [0,0xx].
+        \item Custo extra de AutoGluon extreme vs modelo X: [fator de tempo].
+        \item Quando o ganho de AutoML e relevante na prática? [resposta baseada nos regimes].
+    \end{itemize}
+\end{frame}
+
+% Slide 20: conclusões e limites
+% Apresenta: todos
+\begin{frame}{Conclusões e limites}
+    \begin{itemize}
+        \item Posição do modelo: [resumo em uma frase].
+        \item Pontos fortes: [...]
+        \item Limites: [restrições de n, p, regime, dependência de pesos pré-treinados].
+        \item Próximos passos: [coletar mais regimes, calibracao, integracao com pipelines AutoML].
+    \end{itemize}
+\end{frame}
+
+% Slide 21: obrigado
+% Apresenta: todos
+\begin{frame}{Obrigado}
+    \centering
+    \textbf{Perguntas?}
+    \\[1em]
+    \footnotesize
+    Repositório: \texttt{[link]}\\
+    Contato: [emails dos integrantes]\\
+    Referências principais: [3 a 5 itens]
+\end{frame}
+
+\end{document}

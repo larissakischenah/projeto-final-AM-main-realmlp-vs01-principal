@@ -1,0 +1,30 @@
+<oml:data_set_description xmlns:oml="http://openml.org/openml">
+  <oml:id>46918</oml:id>
+  <oml:name>credit-g</oml:name>
+  <oml:version>5</oml:version>
+  <oml:description>This dataset was curated for [TabArena](https://tabarena.ai/) by the TabArena team
+as part of the [TabArena Tabular ML IID Study](https://tabarena.ai/data-tabular-ml-iid-study).
+For more details on the study, see our [paper](https://tabarena.ai/paper-tabular-ml-iid-study).
+
+**Dataset Focus**: This dataset shall be used for evaluating predictive machine
+learning models for independent and identically distributed tabular data. The
+intended task is classification.
+
+---
+#### Dataset Metadata
+- **Licence:** CC BY 4.0
+- **Original Data Source:** https://doi.org/10.24432/C5NC77
+- **Reference (please cite)**: Hofmann, H. (1994). Statlog (German Credit Data) [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C5NC77.
+- **Dataset Year:** 1994
+- **Dataset Description:** see the reference and the original data source for details.
+
+#### Curation comments by the TabArena team (for code see the [page of the study](https://tabarena.ai/data-tabular-ml-iid-study)):
+- We revered the original ordinal encoding. 
+- Anomaly: the original task used a cost matrix for evaluation.</oml:description>
+  <oml:description_version>1</oml:description_version>
+  <oml:format>arff</oml:format>
+  <oml:creator>See original data source.</oml:creator>  <oml:contributor>TabArena Team</oml:contributor>   <oml:collection_date>1994</oml:collection_date>  <oml:upload_date>2025-04-30T20:15:41</oml:upload_date>
+  <oml:language>English</oml:language>  <oml:licence>CC BY 4.0</oml:licence>  <oml:url>https://openml.org/data/v1/download/22125229/credit-g.arff</oml:url>
+  <oml:parquet_url>https://data.openml.org/datasets/0004/46918/dataset_46918.pq</oml:parquet_url>  <oml:file_id>22125229</oml:file_id>  <oml:default_target_attribute>good_or_bad_customer</oml:default_target_attribute>      <oml:version_label>tabular-ml-iid-study-0.0.1</oml:version_label>  <oml:citation>Hofmann, H. (1994). Statlog (German Credit Data) [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C5NC77.</oml:citation>    <oml:visibility>public</oml:visibility>  <oml:original_data_url>https://doi.org/10.24432/C5NC77</oml:original_data_url>  <oml:paper_url>https://tabarena.ai/paper-tabular-ml-iid-study</oml:paper_url>    <oml:status>active</oml:status>
+  <oml:processing_date>2025-04-30 20:16:25</oml:processing_date>      <oml:md5_checksum>4a6d9d5ac9ef10ced7b8c5b499499c26</oml:md5_checksum>
+</oml:data_set_description>

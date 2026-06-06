@@ -1,0 +1,29 @@
+<oml:data_set_description xmlns:oml="http://openml.org/openml">
+  <oml:id>46979</oml:id>
+  <oml:name>jm1</oml:name>
+  <oml:version>3</oml:version>
+  <oml:description>This dataset was curated for [TabArena](https://tabarena.ai/) by the TabArena team
+as part of the [TabArena Tabular ML IID Study](https://tabarena.ai/data-tabular-ml-iid-study).
+For more details on the study, see our [paper](https://tabarena.ai/paper-tabular-ml-iid-study).
+
+**Dataset Focus**: This dataset shall be used for evaluating predictive machine
+learning models for independent and identically distributed tabular data. The
+intended task is classification.
+
+---
+#### Dataset Metadata
+- **Licence:** Public Domain
+- **Original Data Source:** https://www.openml.org/d/1053
+- **Reference (please cite)**: How Good is Your Blind Spot Sampling Policy?; 2003; Tim Menzies and Justin S. Di Stefano; 2004 IEEE Conference on High Assurance Software Engineering (http://menzies.us/pdf/03blind.pdf).
+- **Dataset Year:** 2004
+- **Dataset Description:** see the reference and the original data source for details.
+
+#### Curation comments by the TabArena team (for code see the [page of the study](https://tabarena.ai/data-tabular-ml-iid-study)):
+- We selected this dataset as representative of a set of predictive modeling tasks of software engineering (other examples of such tasks are available on OpenML under the names mozilla4, pc1, pc2, pc3, mc1, kc1, kc2). This dataset was selected as it has the largest sample size.</oml:description>
+  <oml:description_version>1</oml:description_version>
+  <oml:format>arff</oml:format>
+  <oml:creator>See original data source.</oml:creator>  <oml:contributor>TabArena Team</oml:contributor>   <oml:collection_date>2004</oml:collection_date>  <oml:upload_date>2025-05-06T10:46:18</oml:upload_date>
+  <oml:language>English</oml:language>  <oml:licence>Public Domain</oml:licence>  <oml:url>https://openml.org/data/v1/download/22125396/jm1.arff</oml:url>
+  <oml:parquet_url>https://data.openml.org/datasets/0004/46979/dataset_46979.pq</oml:parquet_url>  <oml:file_id>22125396</oml:file_id>  <oml:default_target_attribute>defects</oml:default_target_attribute>      <oml:version_label>tabular-ml-iid-study-0.0.1</oml:version_label>  <oml:citation>How Good is Your Blind Spot Sampling Policy?; 2003; Tim Menzies and Justin S. Di Stefano; 2004 IEEE Conference on High Assurance Software Engineering (http://menzies.us/pdf/03blind.pdf).</oml:citation>    <oml:visibility>public</oml:visibility>  <oml:original_data_url>https://www.openml.org/d/1053</oml:original_data_url>  <oml:paper_url>https://tabarena.ai/paper-tabular-ml-iid-study</oml:paper_url>    <oml:status>active</oml:status>
+  <oml:processing_date>2025-05-06 10:47:03</oml:processing_date>      <oml:md5_checksum>879ec0e136c85f164775651f2eec099f</oml:md5_checksum>
+</oml:data_set_description>

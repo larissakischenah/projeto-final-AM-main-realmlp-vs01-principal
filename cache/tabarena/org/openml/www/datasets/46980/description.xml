@@ -1,0 +1,32 @@
+<oml:data_set_description xmlns:oml="http://openml.org/openml">
+  <oml:id>46980</oml:id>
+  <oml:name>MIC</oml:name>
+  <oml:version>3</oml:version>
+  <oml:description>This dataset was curated for [TabArena](https://tabarena.ai/) by the TabArena team
+as part of the [TabArena Tabular ML IID Study](https://tabarena.ai/data-tabular-ml-iid-study).
+For more details on the study, see our [paper](https://tabarena.ai/paper-tabular-ml-iid-study).
+
+**Dataset Focus**: This dataset shall be used for evaluating predictive machine
+learning models for independent and identically distributed tabular data. The
+intended task is classification.
+
+---
+#### Dataset Metadata
+- **Licence:** CC BY 4.0
+- **Original Data Source:** https://doi.org/10.24432/C53P5M
+- **Reference (please cite)**: Golovenkin, Sergey E., et al. 'Trajectories, bifurcations, and pseudo-time in large clinical datasets: applications to myocardial infarction and diabetes data.' GigaScience 9.11 (2020): giaa128. https://doi.org/10.1093/gigascience/giaa128
+- **Dataset Year:** 2020
+- **Dataset Description:** see the reference and the original data source for details.
+
+#### Curation comments by the TabArena team (for code see the [page of the study](https://tabarena.ai/data-tabular-ml-iid-study)):
+- There are 12 possible targets and four possible time moments to predict the targets for this dataset. We use the categorical target as it summarizes the other possible targets. Furthermore, we use the last possible time point for prediction to utilize all available data. 
+- We treat &quot;?&quot; as missing values.
+- We dropped the &quot;id&quot; column.
+- We reversed the ordinal encoding of the target feature.</oml:description>
+  <oml:description_version>1</oml:description_version>
+  <oml:format>arff</oml:format>
+  <oml:creator>See original data source.</oml:creator>  <oml:contributor>TabArena Team</oml:contributor>   <oml:collection_date>2020</oml:collection_date>  <oml:upload_date>2025-05-06T10:46:23</oml:upload_date>
+  <oml:language>English</oml:language>  <oml:licence>CC BY 4.0</oml:licence>  <oml:url>https://openml.org/data/v1/download/22125397/MIC.arff</oml:url>
+  <oml:parquet_url>https://data.openml.org/datasets/0004/46980/dataset_46980.pq</oml:parquet_url>  <oml:file_id>22125397</oml:file_id>  <oml:default_target_attribute>LET_IS</oml:default_target_attribute>      <oml:version_label>tabular-ml-iid-study-0.0.1</oml:version_label>  <oml:citation>Golovenkin, Sergey E., et al. 'Trajectories, bifurcations, and pseudo-time in large clinical datasets: applications to myocardial infarction and diabetes data.' GigaScience 9.11 (2020): giaa128. https://doi.org/10.1093/gigascience/giaa128</oml:citation>    <oml:visibility>public</oml:visibility>  <oml:original_data_url>https://doi.org/10.24432/C53P5M</oml:original_data_url>  <oml:paper_url>https://tabarena.ai/paper-tabular-ml-iid-study</oml:paper_url>    <oml:status>active</oml:status>
+  <oml:processing_date>2025-05-06 10:47:07</oml:processing_date>      <oml:md5_checksum>4af33fbb77eee0c5600aaa424efba5bc</oml:md5_checksum>
+</oml:data_set_description>

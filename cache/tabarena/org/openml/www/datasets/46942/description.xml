@@ -1,0 +1,31 @@
+<oml:data_set_description xmlns:oml="http://openml.org/openml">
+  <oml:id>46942</oml:id>
+  <oml:name>miami_housing</oml:name>
+  <oml:version>3</oml:version>
+  <oml:description>This dataset was curated for [TabArena](https://tabarena.ai/) by the TabArena team
+as part of the [TabArena Tabular ML IID Study](https://tabarena.ai/data-tabular-ml-iid-study).
+For more details on the study, see our [paper](https://tabarena.ai/paper-tabular-ml-iid-study).
+
+**Dataset Focus**: This dataset shall be used for evaluating predictive machine
+learning models for independent and identically distributed tabular data. The
+intended task is regression.
+
+---
+#### Dataset Metadata
+- **Licence:** CC BY-NC-SA
+- **Original Data Source:** https://www.openml.org/search?type=data&amp;id=43093&amp;sort=runs&amp;status=active
+- **Reference (please cite)**: Bourassa, Steven C., et al. 'Big data, accessibility and urban house prices.' Urban Studies 58.15 (2021): 3176-3195. https://doi.org/10.1177/0042098020982508
+- **Dataset Year:** 2016
+- **Dataset Description:** see the reference and the original data source for details.
+
+#### Curation comments by the TabArena team (for code see the [page of the study](https://tabarena.ai/data-tabular-ml-iid-study)):
+- We drop duplicated homes (non-unique identifiers and location) (~1% of the data).
+- We drop the ID column &quot;PARCELNO&quot;. 
+- Anomaly: while the original paper describes data with 57k samples, we only have 13k on OpenML or Kaggle.</oml:description>
+  <oml:description_version>1</oml:description_version>
+  <oml:format>arff</oml:format>
+  <oml:creator>See original data source.</oml:creator>  <oml:contributor>TabArena Team</oml:contributor>   <oml:collection_date>2016</oml:collection_date>  <oml:upload_date>2025-04-30T20:18:56</oml:upload_date>
+  <oml:language>English</oml:language>  <oml:licence>CC BY-NC-SA</oml:licence>  <oml:url>https://openml.org/data/v1/download/22125253/miami_housing.arff</oml:url>
+  <oml:parquet_url>https://data.openml.org/datasets/0004/46942/dataset_46942.pq</oml:parquet_url>  <oml:file_id>22125253</oml:file_id>  <oml:default_target_attribute>SALE_PRC</oml:default_target_attribute>      <oml:version_label>tabular-ml-iid-study-0.0.1</oml:version_label>  <oml:citation>Bourassa, Steven C., et al. 'Big data, accessibility and urban house prices.' Urban Studies 58.15 (2021): 3176-3195. https://doi.org/10.1177/0042098020982508</oml:citation>    <oml:visibility>public</oml:visibility>  <oml:original_data_url>https://www.openml.org/search?type=data&amp;id=43093&amp;sort=runs&amp;status=active</oml:original_data_url>  <oml:paper_url>https://tabarena.ai/paper-tabular-ml-iid-study</oml:paper_url>    <oml:status>active</oml:status>
+  <oml:processing_date>2025-04-30 20:19:12</oml:processing_date>      <oml:md5_checksum>d36a5908e7df91e0c902ffa1e389472e</oml:md5_checksum>
+</oml:data_set_description>

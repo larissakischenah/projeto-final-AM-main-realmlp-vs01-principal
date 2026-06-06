@@ -1,0 +1,241 @@
+% =============================================================================
+% Templaté do Relatório Final do Projeto de Aprendizagem de Máquina (pós).
+% Cada seção traz comentarios "% TODO grupo:" indicando o que escrever.
+% Limite recomendado: 25 paginas (sem apêndices).
+% Compilar com: pdflatex relatório.tex (duas passadas)
+% =============================================================================
+\documentclass[11pt,a4paper]{article}
+\input{../../common/preamble.tex}
+
+\hypersetup{pdftitle={Relatório Final - Projeto de Aprendizagem de Máquina (pós) - 2026.1}}
+
+\title{\bfseries Relatório Final do Projeto\\[0.3em]
+       \large Disciplina de Aprendizagem de Máquina (pós-graduação)}
+\author{Grupo: \textbf{[NOMES DOS INTEGRANTES]}\\
+        Modelo atribuído: \textbf{[NOME DO MODELO]}}
+\date{2026.1}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+% TODO grupo: escreva 5 a 8 linhas resumindo o modelo atribuído, o conjunto
+% de datasets do TabArena utilizado, as métricas avaliadas, o resultado
+% comparativo contra os baselines (LightGBM, CatBoost, XGBoost) e contra o
+% AutoGluon 1.4 (default e extreme), e a principal conclusão sobre os
+% regimes em que o modelo se mostra competitivo.
+\noindent
+[Resumo do projeto: modelo, dados, métricas, comparação com baselines e
+AutoGluon, conclusão principal.]
+\end{abstract}
+
+\tableofcontents
+\bigskip
+
+% =============================================================================
+\section{Introdução}
+% =============================================================================
+
+\subsection{Contexto e motivação}
+% TODO grupo: situe o problema da classificação tabular como dominio em
+% que métodos baseados em árvores ainda dominam, mas com novos paradigmas
+% emergindo (foundation models, MLPs modernas, redes recursivas, etc.).
+% Justifique a relevancia da comparação sistematica.
+
+\subsection{Modelo atribuído}
+% TODO grupo: nome, ano, autores, URL do repositório oficial, toolkit
+% utilizado e por que o modelo e considerado representativo da literatura
+% recente (2023 a 2026).
+
+\subsection{Contribuições do trabalho}
+% TODO grupo: liste em 3 a 5 itens o que este relatório entrega
+% (implementação reproduzível, comparação com baselines + AutoGluon,
+% análise estatística classica e Bayesiana, análise por regime, model
+% card detalhado).
+
+% =============================================================================
+\etapa{1}{Fundamentação teórica do modelo}
+% =============================================================================
+
+\subsection{Motivação e intuição}
+% TODO grupo: descreva em 1 a 2 paragrafos a intuição por tras do modelo.
+% Qual problema o modelo tenta resolver de forma diferente dos baselines?
+
+\subsection{Arquitetura e formulação}
+% TODO grupo: detalhe a arquitetura. Inclua um diagrama de blocos
+% (figura) e a formulação matemática essencial. Use \begin{figure}
+% \includegraphics{...} \end{figure} para o diagrama.
+
+\subsection{Complexidade computacional}
+% TODO grupo: tempo e memória em função de n (amostras) e p (features).
+% Liste o pico de memória observado nos seus experimentos (RAM ou VRAM).
+
+\subsection{Posicionamento na literatura tabular SOTA}
+% TODO grupo: situe o modelo na linha do tempo 2023 a 2026. Quais são os
+% trabalhos correlatos? Quais são as alternativas que o modelo supera ou
+% complementa? 5 a 10 referências relevantes.
+
+\subsection{Hiperparâmetros principais e faixas}
+% TODO grupo: tabela com hiperparâmetros do modelo, valores tipicos e
+% faixas usadas na busca via Optuna.
+
+\begin{table}[h]
+\centering
+\caption{Hiperparâmetros principais do modelo atribuído e faixas de busca.}
+\label{tab:hp}
+\begin{tabular}{l p{4.5cm} p{6.0cm}}
+\toprule
+\textbf{Hiperparâmetro} & \textbf{Tipo / faixa} & \textbf{Justificativa} \\
+\midrule
+{}[hp1] & [int / log uniform / etc.] & [referência ou heuristica] \\
+{}[hp2] & [...]                       & [...] \\
+{}[hp3] & [...]                       & [...] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% =============================================================================
+\etapa{2}{Estudo experimental}
+% =============================================================================
+
+\subsection{Métodologia}
+% TODO grupo: descreva o protocolo: 30 datasets do TabArena-v0.1
+% estratificados em 10 pequenos + 10 médios + 10 grandes; split 70/30
+% estratificado por classe com seed fixa documentada; busca de
+% hiperparâmetros via Optuna (TPE) com validação cruzada no treino;
+% métricas AUC OvO, ACC, G-Mean, Cross-Entropy e tempo total
+% (tune + train + predict).
+
+\subsection{Baselines e referência AutoML}
+% TODO grupo: descreva os três baselines (LightGBM, CatBoost, XGBoost
+% via pytabkit com defaults TD) e as duas configurações do AutoGluon
+% 1.4 (preset default e preset extreme com orçamento de 4 horas).
+
+\subsection{Resultados gerais}
+% TODO grupo: tabela com media +/- desvio em cada métrica por modelo,
+% mais ranking médio nos 30 datasets. Inclua todos os 15 sistemas
+% (10 modelos atribuíveis + 3 baselines + 2 AutoGluon) para
+% comparação agregada.
+
+\begin{table}[h]
+\centering
+\caption{Resultados agregados: media +/- desvio padrao em 30 datasets.}
+\label{tab:resultados}
+\footnotesize
+\begin{tabular}{l c c c c c}
+\toprule
+\textbf{Sistema} & \textbf{AUC OvO} & \textbf{ACC} & \textbf{G-Mean} & \textbf{Cross-Ent.} & \textbf{Tempo (s)} \\
+\midrule
+{}[Modelo do grupo]    & 0,xx $\pm$ 0,0xx & 0,xx $\pm$ 0,0xx & 0,xx $\pm$ 0,0xx & 0,xx $\pm$ 0,0xx & xxx \\
+LightGBM (TD)        & 0,xx $\pm$ 0,0xx & 0,xx $\pm$ 0,0xx & 0,xx $\pm$ 0,0xx & 0,xx $\pm$ 0,0xx & xxx \\
+CatBoost (TD)        & 0,xx $\pm$ 0,0xx & 0,xx $\pm$ 0,0xx & 0,xx $\pm$ 0,0xx & 0,xx $\pm$ 0,0xx & xxx \\
+XGBoost (TD)         & 0,xx $\pm$ 0,0xx & 0,xx $\pm$ 0,0xx & 0,xx $\pm$ 0,0xx & 0,xx $\pm$ 0,0xx & xxx \\
+AutoGluon default    & 0,xx $\pm$ 0,0xx & 0,xx $\pm$ 0,0xx & 0,xx $\pm$ 0,0xx & 0,xx $\pm$ 0,0xx & xxx \\
+AutoGluon extreme 4h & 0,xx $\pm$ 0,0xx & 0,xx $\pm$ 0,0xx & 0,xx $\pm$ 0,0xx & 0,xx $\pm$ 0,0xx & xxx \\
+{}[demais 9 modelos]   & ... & ... & ... & ... & ... \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Análise por regime}
+% TODO grupo: segmente os resultados em quatro eixos: (i) tamanho do
+% dataset (n menor que 1k, 1k a 10k, acima de 10k); (ii) número de
+% classes (binário vs multiclasse); (iii) proporção categorica
+% (baixa vs alta); (iv) presenca de valores ausentes (com vs sem
+% NaN). Inclua um gráfico para cada eixo (figura gerada pelo notebook
+% \arquivo{notebooks/04\_demo\_stats\_regime.ipynb}).
+
+\subsection{Análise estatística}
+% TODO grupo: aplique o protocolo de Demsar (2006) e Benavoli et al.
+% (2017): teste de Friedman global, post-hoc Nemenyi (diagrama de
+% diferença crítica gerado por \texttt{autorank}), e teste Bayesian
+% signed-rank com região de equivalencia prática (ROPE) sobre AUC,
+% gerado por \texttt{baycomp}. Discuta os pares com p > 0.95 de
+% equivalencia prática.
+
+\subsection{Custo vs desempenho}
+% TODO grupo: scatter de tempo total (eixo x) por AUC OvO media (eixo
+% y) com todos os 15 sistemas. Discuta a fronteira de Pareto.
+% AutoGluon define o teto prático (com orçamento longo); os baselines
+% definem o piso barato. Posicione o modelo do grupo nesse mapa.
+
+% =============================================================================
+\section{Discussão}
+% =============================================================================
+
+% TODO grupo: 4 a 6 paragrafos. Em quais regimes o modelo do grupo se
+% mostra competitivo? Em quais perde para os baselines? Em quais perde
+% para o AutoGluon? Como interpretar a comparação Bayesiana com ROPE
+% nesse contexto? Quais são os limites práticos do modelo?
+
+% =============================================================================
+\section{Reprodutibilidade}
+% =============================================================================
+
+% TODO grupo: ambiente Python (versão), bibliotecas e versões,
+% hardware utilizado, comandos mínimos para reproduzir, hash do
+% commit do repositório e tempo total de execução.
+
+\begin{verbatim}
+uv sync
+python -m src.pipeline.run_all --include-group-model --seed 42
+\end{verbatim}
+
+% =============================================================================
+\section*{Referências}
+% =============================================================================
+
+% TODO grupo: liste artigos, documentacoes e bibliotecas. Use \texttt{bibtex}
+% ou liste manualmente.
+\begin{itemize}[leftmargin=1.2em]
+\item [paper original do modelo]
+\item Demsar, J. (2006). Statistical comparisons of classifiers over multiple datasets. JMLR.
+\item Benavoli, A., Corani, G., Demsar, J., Zaffalon, M. (2017). Time for a Change: a Tutorial for Comparing Multiple Classifiers Through Bayesian Analysis. JMLR.
+\item TabArena-v0.1 (NeurIPS 2025): https://tabarena.ai
+\end{itemize}
+
+\appendix
+
+% =============================================================================
+\section{Tabela dos 30 datasets escolhidos}
+% =============================================================================
+
+% TODO grupo: preencha com os 30 datasets escolhidos do TabArena-v0.1
+% (10 pequenos + 10 médios + 10 grandes), citando OpenML task ID, n,
+% n_features, n_classes e regime atribuído.
+
+\begin{table}[h]
+\centering
+\caption{Datasets do TabArena-v0.1 utilizados, agrupados por regime.}
+\label{tab:datasets}
+\footnotesize
+\begin{tabular}{l r r r r l}
+\toprule
+\textbf{Dataset} & \textbf{Task ID} & \textbf{n} & \textbf{features} & \textbf{classes} & \textbf{Regime} \\
+\midrule
+{}[d1]  & xxxxx & xxx     & xx & x & pequeno \\
+{}[d2]  & xxxxx & xxx     & xx & x & pequeno \\
+\multicolumn{6}{c}{...} \\
+{}[d10] & xxxxx & xxx     & xx & x & pequeno \\
+{}[d11] & xxxxx & xxxxx   & xx & x & médio \\
+\multicolumn{6}{c}{...} \\
+{}[d20] & xxxxx & xxxxx   & xx & x & médio \\
+{}[d21] & xxxxx & xxxxxxx & xx & x & grande \\
+\multicolumn{6}{c}{...} \\
+{}[d30] & xxxxx & xxxxxxx & xx & x & grande \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% =============================================================================
+\section{Espacos de busca utilizados pelo Optuna}
+% =============================================================================
+
+% TODO grupo: para cada modelo cuja busca foi feita pelo grupo, liste o
+% espaco de busca efetivamente utilizado (hiperparâmetro, tipo, faixa,
+% prior). Para os baselines com defaults TD do pytabkit, basta indicar
+% que a configuração default foi usada sem busca.
+
+\end{document}

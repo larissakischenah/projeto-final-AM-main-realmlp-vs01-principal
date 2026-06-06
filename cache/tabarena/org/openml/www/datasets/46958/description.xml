@@ -1,0 +1,31 @@
+<oml:data_set_description xmlns:oml="http://openml.org/openml">
+  <oml:id>46958</oml:id>
+  <oml:name>splice</oml:name>
+  <oml:version>4</oml:version>
+  <oml:description>This dataset was curated for [TabArena](https://tabarena.ai/) by the TabArena team
+as part of the [TabArena Tabular ML IID Study](https://tabarena.ai/data-tabular-ml-iid-study).
+For more details on the study, see our [paper](https://tabarena.ai/paper-tabular-ml-iid-study).
+
+**Dataset Focus**: This dataset shall be used for evaluating predictive machine
+learning models for independent and identically distributed tabular data. The
+intended task is classification.
+
+---
+#### Dataset Metadata
+- **Licence:** CC BY 4.0
+- **Original Data Source:** https://doi.org/10.24432/C5M888
+- **Reference (please cite)**: Towell, Geoffrey G., and Jude W. Shavlik. 'Knowledge-based artificial neural networks.' Artificial intelligence 70.1-2 (1994): 119-165. https://doi.org/10.1016/0004-3702(94)90105-8
+- **Dataset Year:** 1991
+- **Dataset Description:** see the reference and the original data source for details.
+
+#### Curation comments by the TabArena team (for code see the [page of the study](https://tabarena.ai/data-tabular-ml-iid-study)):
+- We tabularized the fixed-size DNA sequences from the original dataset based on the nucleotide position.
+- We removed the instance ID.
+- Anomaly: As always, we randomly shuffle the data before uploading. If one would not randomly shuffle the data, there would be a shift based on the original order of data samples.</oml:description>
+  <oml:description_version>1</oml:description_version>
+  <oml:format>arff</oml:format>
+  <oml:creator>See original data source.</oml:creator>  <oml:contributor>TabArena Team</oml:contributor>   <oml:collection_date>1991</oml:collection_date>  <oml:upload_date>2025-04-30T20:20:54</oml:upload_date>
+  <oml:language>English</oml:language>  <oml:licence>CC BY 4.0</oml:licence>  <oml:url>https://openml.org/data/v1/download/22125269/splice.arff</oml:url>
+  <oml:parquet_url>https://data.openml.org/datasets/0004/46958/dataset_46958.pq</oml:parquet_url>  <oml:file_id>22125269</oml:file_id>  <oml:default_target_attribute>SiteType</oml:default_target_attribute>      <oml:version_label>tabular-ml-iid-study-0.0.1</oml:version_label>  <oml:citation>Towell, Geoffrey G., and Jude W. Shavlik. 'Knowledge-based artificial neural networks.' Artificial intelligence 70.1-2 (1994): 119-165. https://doi.org/10.1016/0004-3702(94)90105-8</oml:citation>    <oml:visibility>public</oml:visibility>  <oml:original_data_url>https://doi.org/10.24432/C5M888</oml:original_data_url>  <oml:paper_url>https://tabarena.ai/paper-tabular-ml-iid-study</oml:paper_url>    <oml:status>active</oml:status>
+  <oml:processing_date>2025-04-30 20:22:16</oml:processing_date>      <oml:md5_checksum>79bfb5daaaf0ddf84e364d55c0496dc6</oml:md5_checksum>
+</oml:data_set_description>

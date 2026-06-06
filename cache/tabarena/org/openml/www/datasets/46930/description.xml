@@ -1,0 +1,30 @@
+<oml:data_set_description xmlns:oml="http://openml.org/openml">
+  <oml:id>46930</oml:id>
+  <oml:name>hazelnut-spread-contaminant-detection</oml:name>
+  <oml:version>1</oml:version>
+  <oml:description>This dataset was curated for [TabArena](https://tabarena.ai/) by the TabArena team
+as part of the [TabArena Tabular ML IID Study](https://tabarena.ai/data-tabular-ml-iid-study).
+For more details on the study, see our [paper](https://tabarena.ai/paper-tabular-ml-iid-study).
+
+**Dataset Focus**: This dataset shall be used for evaluating predictive machine
+learning models for independent and identically distributed tabular data. The
+intended task is classification.
+
+---
+#### Dataset Metadata
+- **Licence:** CC BY-SA
+- **Original Data Source:** https://www.openml.org/search?type=data&amp;status=active&amp;id=45538
+- **Reference (please cite)**: Ricci, Marco, et al. 'Machine-learning-based microwave sensing: A case study for the food industry.' IEEE Journal on Emerging and Selected Topics in Circuits and Systems 11.3 (2021): 503-514. https://doi.org/10.1109/JETCAS.2021.3097699; Urbinati, Luca, et al. 'A machine-learning based microwave sensing approach to food contaminant detection.' 2020 IEEE International Symposium on Circuits and Systems (ISCAS). IEEE, 2020. https://doi.org/10.1109/ISCAS45731.2020.9181293
+- **Dataset Year:** 2020
+- **Dataset Description:** see the reference and the original data source for details.
+
+#### Curation comments by the TabArena team (for code see the [page of the study](https://tabarena.ai/data-tabular-ml-iid-study)):
+- We select a features from a single frequency (10 GHz) as the authors also only considered this frequency for the final experiments.
+- Anomaly: we use the publicly available dataset state, which is without preprocessing. Moreover, we were not able to inverse the original ordinal encoding of the label.</oml:description>
+  <oml:description_version>1</oml:description_version>
+  <oml:format>arff</oml:format>
+  <oml:creator>See original data source.</oml:creator>  <oml:contributor>TabArena Team</oml:contributor>   <oml:collection_date>2020</oml:collection_date>  <oml:upload_date>2025-04-30T20:17:13</oml:upload_date>
+  <oml:language>English</oml:language>  <oml:licence>CC BY-SA</oml:licence>  <oml:url>https://openml.org/data/v1/download/22125241/hazelnut-spread-contaminant-detection.arff</oml:url>
+  <oml:parquet_url>https://data.openml.org/datasets/0004/46930/dataset_46930.pq</oml:parquet_url>  <oml:file_id>22125241</oml:file_id>  <oml:default_target_attribute>Contaminated</oml:default_target_attribute>      <oml:version_label>tabular-ml-iid-study-0.0.1</oml:version_label>  <oml:citation>Ricci, Marco, et al. 'Machine-learning-based microwave sensing: A case study for the food industry.' IEEE Journal on Emerging and Selected Topics in Circuits and Systems 11.3 (2021): 503-514. https://doi.org/10.1109/JETCAS.2021.3097699; Urbinati, Luca, et al. 'A machine-learning based microwave sensing approach to food contaminant detection.' 2020 IEEE International Symposium on Circuits and Systems (ISCAS). IEEE, 2020. https://doi.org/10.1109/ISCAS45731.2020.9181293</oml:citation>    <oml:visibility>public</oml:visibility>  <oml:original_data_url>https://www.openml.org/search?type=data&amp;status=active&amp;id=45538</oml:original_data_url>  <oml:paper_url>https://tabarena.ai/paper-tabular-ml-iid-study</oml:paper_url>    <oml:status>active</oml:status>
+  <oml:processing_date>2025-04-30 20:17:32</oml:processing_date>      <oml:md5_checksum>ee22c35dc7f819618eab65c6360157ed</oml:md5_checksum>
+</oml:data_set_description>

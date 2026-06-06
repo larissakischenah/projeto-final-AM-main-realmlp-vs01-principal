@@ -1,0 +1,30 @@
+<oml:data_set_description xmlns:oml="http://openml.org/openml">
+  <oml:id>46969</oml:id>
+  <oml:name>NATICUSdroid</oml:name>
+  <oml:version>3</oml:version>
+  <oml:description>This dataset was curated for [TabArena](https://tabarena.ai/) by the TabArena team
+as part of the [TabArena Tabular ML IID Study](https://tabarena.ai/data-tabular-ml-iid-study).
+For more details on the study, see our [paper](https://tabarena.ai/paper-tabular-ml-iid-study).
+
+**Dataset Focus**: This dataset shall be used for evaluating predictive machine
+learning models for independent and identically distributed tabular data. The
+intended task is classification.
+
+---
+#### Dataset Metadata
+- **Licence:** CC BY 4.0
+- **Original Data Source:** https://doi.org/10.24432/C5FS64
+- **Reference (please cite)**: Mathur, Akshay, et al. 'NATICUSdroid: A malware detection framework for Android using native and custom permissions.' Journal of Information Security and Applications 58 (2021): 102696. https://doi.org/10.1016/j.jisa.2020.102696
+- **Dataset Year:** 2021
+- **Dataset Description:** see the reference and the original data source for details.
+
+#### Curation comments by the TabArena team (for code see the [page of the study](https://tabarena.ai/data-tabular-ml-iid-study)):
+- Originally, the data has 75% duplicates and a perfect class balance. The authors never mention duplicates in their paper. Given this large amount of duplicates, we dropped all row-duplicates, keeping only the first entry.
+- Anomaly: all features are binary categorical features.</oml:description>
+  <oml:description_version>1</oml:description_version>
+  <oml:format>arff</oml:format>
+  <oml:creator>See original data source.</oml:creator>  <oml:contributor>TabArena Team</oml:contributor>   <oml:collection_date>2021</oml:collection_date>  <oml:upload_date>2025-04-30T22:28:30</oml:upload_date>
+  <oml:language>English</oml:language>  <oml:licence>CC BY 4.0</oml:licence>  <oml:url>https://openml.org/data/v1/download/22125386/NATICUSdroid.arff</oml:url>
+  <oml:parquet_url>https://data.openml.org/datasets/0004/46969/dataset_46969.pq</oml:parquet_url>  <oml:file_id>22125386</oml:file_id>  <oml:default_target_attribute>Malware</oml:default_target_attribute>      <oml:version_label>tabular-ml-iid-study-0.0.1</oml:version_label>  <oml:citation>Mathur, Akshay, et al. 'NATICUSdroid: A malware detection framework for Android using native and custom permissions.' Journal of Information Security and Applications 58 (2021): 102696. https://doi.org/10.1016/j.jisa.2020.102696</oml:citation>    <oml:visibility>public</oml:visibility>  <oml:original_data_url>https://doi.org/10.24432/C5FS64</oml:original_data_url>  <oml:paper_url>https://tabarena.ai/paper-tabular-ml-iid-study</oml:paper_url>    <oml:status>active</oml:status>
+  <oml:processing_date>2025-04-30 22:29:04</oml:processing_date>      <oml:md5_checksum>7d290894bf8f7454baf61d6998aa2d56</oml:md5_checksum>
+</oml:data_set_description>

@@ -1,0 +1,31 @@
+<oml:data_set_description xmlns:oml="http://openml.org/openml">
+  <oml:id>46912</oml:id>
+  <oml:name>Bioresponse</oml:name>
+  <oml:version>4</oml:version>
+  <oml:description>This dataset was curated for [TabArena](https://tabarena.ai/) by the TabArena team
+as part of the [TabArena Tabular ML IID Study](https://tabarena.ai/data-tabular-ml-iid-study).
+For more details on the study, see our [paper](https://tabarena.ai/paper-tabular-ml-iid-study).
+
+**Dataset Focus**: This dataset shall be used for evaluating predictive machine
+learning models for independent and identically distributed tabular data. The
+intended task is classification.
+
+---
+#### Dataset Metadata
+- **Licence:** Public Domain
+- **Original Data Source:** https://www.kaggle.com/c/bioresponse
+- **Reference (please cite)**: Ben Hamner, dcthompson, and Jorg. Predicting a Biological Response. https://kaggle.com/competitions/bioresponse, 2012. Kaggle.
+- **Dataset Year:** 2012
+- **Dataset Description:** see the reference and the original data source for details.
+
+#### Curation comments by the TabArena team (for code see the [page of the study](https://tabarena.ai/data-tabular-ml-iid-study)):
+- We only use the training data from Kaggle.
+- Anomaly: all feature represent molecular descriptors but we do not have more semantic information.
+- Anomaly: a large amount of the features (D953-D1776) are sparsely binary encoded variables.</oml:description>
+  <oml:description_version>1</oml:description_version>
+  <oml:format>arff</oml:format>
+  <oml:creator>See original data source.</oml:creator>  <oml:contributor>TabArena Team</oml:contributor>   <oml:collection_date>2012</oml:collection_date>  <oml:upload_date>2025-04-30T19:55:15</oml:upload_date>
+  <oml:language>English</oml:language>  <oml:licence>Public Domain</oml:licence>  <oml:url>https://openml.org/data/v1/download/22125223/Bioresponse.arff</oml:url>
+  <oml:parquet_url>https://data.openml.org/datasets/0004/46912/dataset_46912.pq</oml:parquet_url>  <oml:file_id>22125223</oml:file_id>  <oml:default_target_attribute>MoleculeElicitsResponse</oml:default_target_attribute>      <oml:version_label>tabular-ml-iid-study-0.0.1</oml:version_label>  <oml:citation>Ben Hamner, dcthompson, and Jorg. Predicting a Biological Response. https://kaggle.com/competitions/bioresponse, 2012. Kaggle.</oml:citation>    <oml:visibility>public</oml:visibility>  <oml:original_data_url>https://www.kaggle.com/c/bioresponse</oml:original_data_url>  <oml:paper_url>https://tabarena.ai/paper-tabular-ml-iid-study</oml:paper_url>    <oml:status>active</oml:status>
+  <oml:processing_date>2025-04-30 19:55:40</oml:processing_date>      <oml:md5_checksum>3cb639b0f5434e0a9ad236ae0cbab2da</oml:md5_checksum>
+</oml:data_set_description>

@@ -1,0 +1,33 @@
+<oml:data_set_description xmlns:oml="http://openml.org/openml">
+  <oml:id>46939</oml:id>
+  <oml:name>kddcup09_appetency</oml:name>
+  <oml:version>2</oml:version>
+  <oml:description>This dataset was curated for [TabArena](https://tabarena.ai/) by the TabArena team
+as part of the [TabArena Tabular ML IID Study](https://tabarena.ai/data-tabular-ml-iid-study).
+For more details on the study, see our [paper](https://tabarena.ai/paper-tabular-ml-iid-study).
+
+**Dataset Focus**: This dataset shall be used for evaluating predictive machine
+learning models for independent and identically distributed tabular data. The
+intended task is classification.
+
+---
+#### Dataset Metadata
+- **Licence:** Public
+- **Original Data Source:** https://kdd.org/kdd-cup/view/kdd-cup-2009/Intro
+- **Reference (please cite)**: Guyon, Isabelle, et al. 'Analysis of the kdd cup 2009: Fast scoring on a large orange customer database.' KDD-Cup 2009 Competition. PMLR, 2009. https://proceedings.mlr.press/v7/guyon09.html
+- **Dataset Year:** 2008
+- **Dataset Description:** see the reference and the original data source for details.
+
+#### Curation comments by the TabArena team (for code see the [page of the study](https://tabarena.ai/data-tabular-ml-iid-study)):
+- We use the small (230 features) training data from the original data. 
+- We use appetency as label.
+- We dropped empty columns: &quot;Var8&quot;, &quot;Var15&quot;, &quot;Var20&quot;, &quot;Var31&quot;, &quot;Var32&quot;, &quot;Var39&quot;, &quot;Var42&quot;, &quot;Var48&quot;, &quot;Var52&quot;, &quot;Var55&quot;, &quot;Var79&quot;, &quot;Var141&quot;, &quot;Var167&quot;, &quot;Var169&quot;, &quot;Var175&quot;, &quot;Var185&quot;, &quot;Var209&quot;, &quot;Var230&quot;.
+- Anomaly: this dataset has many missing values.
+- Anomaly: the feature names and categorical values have no semantic meaning.</oml:description>
+  <oml:description_version>1</oml:description_version>
+  <oml:format>arff</oml:format>
+  <oml:creator>See original data source.</oml:creator>  <oml:contributor>TabArena Team</oml:contributor>   <oml:collection_date>2008</oml:collection_date>  <oml:upload_date>2025-04-30T20:18:41</oml:upload_date>
+  <oml:language>English</oml:language>  <oml:licence>Public</oml:licence>  <oml:url>https://openml.org/data/v1/download/22125250/kddcup09_appetency.arff</oml:url>
+  <oml:parquet_url>https://data.openml.org/datasets/0004/46939/dataset_46939.pq</oml:parquet_url>  <oml:file_id>22125250</oml:file_id>  <oml:default_target_attribute>appetency</oml:default_target_attribute>      <oml:version_label>tabular-ml-iid-study-0.0.1</oml:version_label>  <oml:citation>Guyon, Isabelle, et al. 'Analysis of the kdd cup 2009: Fast scoring on a large orange customer database.' KDD-Cup 2009 Competition. PMLR, 2009. https://proceedings.mlr.press/v7/guyon09.html</oml:citation>    <oml:visibility>public</oml:visibility>  <oml:original_data_url>https://kdd.org/kdd-cup/view/kdd-cup-2009/Intro</oml:original_data_url>  <oml:paper_url>https://tabarena.ai/paper-tabular-ml-iid-study</oml:paper_url>    <oml:status>active</oml:status>
+  <oml:processing_date>2025-04-30 20:19:37</oml:processing_date>      <oml:md5_checksum>d8c4ff84954f0ed2fc5ab283eade19b1</oml:md5_checksum>
+</oml:data_set_description>

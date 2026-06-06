@@ -1,0 +1,30 @@
+<oml:data_set_description xmlns:oml="http://openml.org/openml">
+  <oml:id>46915</oml:id>
+  <oml:name>churn</oml:name>
+  <oml:version>4</oml:version>
+  <oml:description>This dataset was curated for [TabArena](https://tabarena.ai/) by the TabArena team
+as part of the [TabArena Tabular ML IID Study](https://tabarena.ai/data-tabular-ml-iid-study).
+For more details on the study, see our [paper](https://tabarena.ai/paper-tabular-ml-iid-study).
+
+**Dataset Focus**: This dataset shall be used for evaluating predictive machine
+learning models for independent and identically distributed tabular data. The
+intended task is classification.
+
+---
+#### Dataset Metadata
+- **Licence:** MIT License
+- **Original Data Source:** Original source lost. See instead PMLB (https://github.com/EpistasisLab/pmlb/tree/master/datasets/churn) or OpenML dataset ID 40701.
+- **Reference (please cite)**: Marcoulides, George A. 'Discovering Knowledge in Data: an Introduction to Data Mining.' (2005): 1465-1465. https://www.tandfonline.com/doi/abs/10.1198/jasa.2005.s61
+- **Dataset Year:** 2005
+- **Dataset Description:** see the reference and the original data source for details.
+
+#### Curation comments by the TabArena team (for code see the [page of the study](https://tabarena.ai/data-tabular-ml-iid-study)):
+- We renamed the target variable to &quot;CustomerChurned&quot;.
+- We dropped the &quot;phone_number&quot; feature as it seems to be an index in the original data.</oml:description>
+  <oml:description_version>1</oml:description_version>
+  <oml:format>arff</oml:format>
+  <oml:creator>See original data source.</oml:creator>  <oml:contributor>TabArena Team</oml:contributor>   <oml:collection_date>2005</oml:collection_date>  <oml:upload_date>2025-04-30T20:15:23</oml:upload_date>
+  <oml:language>English</oml:language>  <oml:licence>MIT License</oml:licence>  <oml:url>https://openml.org/data/v1/download/22125226/churn.arff</oml:url>
+  <oml:parquet_url>https://data.openml.org/datasets/0004/46915/dataset_46915.pq</oml:parquet_url>  <oml:file_id>22125226</oml:file_id>  <oml:default_target_attribute>CustomerChurned</oml:default_target_attribute>      <oml:version_label>tabular-ml-iid-study-0.0.1</oml:version_label>  <oml:citation>Marcoulides, George A. 'Discovering Knowledge in Data: an Introduction to Data Mining.' (2005): 1465-1465. https://www.tandfonline.com/doi/abs/10.1198/jasa.2005.s61</oml:citation>    <oml:visibility>public</oml:visibility>  <oml:original_data_url>See Description</oml:original_data_url>  <oml:paper_url>https://tabarena.ai/paper-tabular-ml-iid-study</oml:paper_url>    <oml:status>active</oml:status>
+  <oml:processing_date>2025-04-30 20:16:18</oml:processing_date>      <oml:md5_checksum>86dd09210baaa4dfaa502a23703a9436</oml:md5_checksum>
+</oml:data_set_description>
