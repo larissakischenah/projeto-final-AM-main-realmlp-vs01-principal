@@ -296,3 +296,32 @@ Alterações planejadas/aplicadas:
 - AutoGluon Extreme preparado tecnicamente com `time_limit=14400` por padrão, sem execução local.
 - Checkpoint mais frequente no runner geral `run_all.py`, salvando após cada modelo.
 - Validação prevista apenas com `--help`, `py_compile` e inspeções estruturais.
+
+## Conversa 3 — Documentação do Plano Kaggle
+
+Branch: `docs/kaggle-execution-plan`
+
+Objetivo:
+- documentar o plano operacional de execução no Kaggle;
+- criar checklist de execução, coleta, backup e consolidação;
+- deixar explícita a separação entre resultados de treino e teste;
+- evitar execução pesada local antes do Kaggle.
+
+Arquivos adicionados:
+- `docs/KAGGLE_EXECUTION_PLAN.md`
+- `docs/KAGGLE_CHECKLIST.md`
+
+Arquivos atualizados:
+- `docs/HISTORY.md`
+
+Resultado:
+- plano operacional Kaggle documentado;
+- checklist de execução criado;
+- comandos por modelo/dataset definidos;
+- coleta dos resultados documentada;
+- consolidação local documentada;
+- backup dos resultados documentado;
+- nenhuma execução pesada local realizada.
+
+Próximo passo recomendado:
+- abrir Conversa 4 para validação do pacote Kaggle ou execução piloto no Kaggle.
