@@ -367,3 +367,34 @@ Próximo passo recomendado:
 - Mantida a separação entre resultados de treino e teste.
 - Reforçado que a estatística principal deve usar results/raw_train.csv.
 - Preparada checklist de execução, backup e consolidação local posterior.
+
+---
+
+## Fase 7 — Correção da execução fragmentada Kaggle Baselines + RealMLP
+
+### Correção dos IDs e comandos fragmentados
+
+**Arquivos:**
+- `scripts/kaggle/run_fragmented_baselines_realmlp_blocks.sh`
+- `docs/KAGGLE_FRAGMENTED_COMMANDS_BASELINES_REALMLP.md`
+- `docs/KAGGLE_FRAGMENTED_EXECUTION_BASELINES_REALMLP.md`
+- `docs/KAGGLE_FRAGMENTED_EXECUTION_CHECKLIST.md`
+
+**Problema:** a documentação e o script de execução fragmentada ainda usavam IDs antigos do OpenML clássico
+(`32`, `26`, `6`, etc.), incompatíveis com a seleção atual TabArena-v0.1 registrada em
+`data/load_tabarena.py::RECOMMENDED_TASK_IDS`. Além disso, o script usava argumentos
+inexistentes no runner atual (`--models` e `--output-dir`).
+
+**Solução:** corrigir a execução fragmentada para usar `RECOMMENDED_TASK_IDS` como fonte de verdade,
+preservando os 30 datasets TabArena-v0.1 atuais, a estratificação 10 small / 10 medium / 10 large,
+o limiar `small < 2.000`, a seed 42, a separação treino/teste e o uso de `raw_train.csv` como base
+principal para estatística posterior.
+
+**Comando correto:** `run_all.py` deve ser chamado com:
+- `--seed 42`;
+- `--task-ids`;
+- `--include-group-model`;
+- `--train-output /kaggle/working/results/raw_train.csv`;
+- `--test-output /kaggle/working/results/raw_test.csv`.
+
+**Fora do escopo:** AutoGluon Default, AutoGluon Extreme e HPO/Optuna continuam excluídos desta fase.
