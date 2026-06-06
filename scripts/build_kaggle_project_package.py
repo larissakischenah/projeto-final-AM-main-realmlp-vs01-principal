@@ -15,6 +15,7 @@ INCLUDE_ROOTS = [
     "data",
     "notebooks",
     "docs",
+    "scripts",
 ]
 
 INCLUDE_FILES = [
