@@ -398,3 +398,45 @@ principal para estatística posterior.
 - `--test-output /kaggle/working/results/raw_test.csv`.
 
 **Fora do escopo:** AutoGluon Default, AutoGluon Extreme e HPO/Optuna continuam excluídos desta fase.
+
+---
+
+## Fase 8 — Coleta local dos resultados Kaggle Baselines + RealMLP
+
+### Coleta e validação local dos CSVs finais
+
+**Origem:**
+- `results_baselines_realmlp_final.zip`, baixado do Kaggle.
+- Cópia local não versionada em `artifacts/kaggle_downloads/results_baselines_realmlp_final.zip`.
+
+**Arquivos finais versionados:**
+- `results/raw_train.csv`
+- `results/raw_test.csv`
+- `outputs/fase08_kaggle_results_validation_summary.csv`
+- `docs/FASE_08_KAGGLE_RESULTS_LOCAL_VALIDATION.md`
+
+**Resultado da validação local:**
+- `results/raw_train.csv`: 120 linhas, 10 colunas, 30 datasets, 4 modelos por dataset.
+- `results/raw_test.csv`: 120 linhas, 10 colunas, 30 datasets, 4 modelos por dataset.
+- Modelos presentes nos dois CSVs:
+  - `catboost`
+  - `group_model`
+  - `lightgbm`
+  - `xgboost`
+- Sem AutoGluon.
+- Sem Optuna.
+- Sem HPO.
+- Sem valores vazios nas colunas esperadas.
+
+**Uso metodológico:**
+- `results/raw_train.csv` será usado como base principal dos testes estatísticos posteriores.
+- `results/raw_test.csv` será reservado para análise complementar de generalização.
+- Os CSVs brutos preservam `model = group_model`.
+- Nas tabelas finais, gráficos, relatório e slides, `group_model` deve ser exibido como **RealMLP**.
+
+**Fora do escopo desta fase:**
+- AutoGluon Default.
+- AutoGluon Extreme.
+- HPO/Optuna.
+- Análise estatística final.
+- Reprocessamento ou recálculo dos resultados.

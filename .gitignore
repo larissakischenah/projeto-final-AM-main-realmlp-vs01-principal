@@ -95,3 +95,8 @@ results/ag_models/
 
 # Pacotes locais gerados para upload no Kaggle
 /dist/
+
+# Local downloaded artifacts and temporary extraction folders
+artifacts/
+tmp/
+*.zip
