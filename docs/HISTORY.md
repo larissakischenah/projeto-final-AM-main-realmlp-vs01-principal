@@ -354,3 +354,16 @@ Próximo passo recomendado:
 - `src/pipeline/split.py` mantém split estratificado 70/30 com `DEFAULT_TEST_SIZE = 0.30`, `DEFAULT_SEED = 42` e `stratify=y`.
 - A análise estatística principal permanece baseada em `results/raw_train.csv`, conforme registrado em `notebooks/04_demo_stats_regime.ipynb`.
 - `results/raw_test.csv` permanece reservado para análise complementar de generalização.
+
+## Conversa 6 — Execução fragmentada Baselines + RealMLP/group_model
+
+- Criada documentação operacional para execução fragmentada dos 30 datasets no Kaggle.
+- Definidos 6 blocos de 5 datasets.
+- Escopo limitado a LightGBM, XGBoost, CatBoost e group_model/RealMLP.
+- AutoGluon Default, AutoGluon Extreme e HPO foram explicitamente excluídos desta etapa.
+- Criados comandos por bloco usando --task-ids.
+- Criado script auxiliar para execução sequencial dos blocos no Kaggle.
+- Mantida a saída em /kaggle/working/results.
+- Mantida a separação entre resultados de treino e teste.
+- Reforçado que a estatística principal deve usar results/raw_train.csv.
+- Preparada checklist de execução, backup e consolidação local posterior.
