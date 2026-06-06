@@ -440,3 +440,26 @@ principal para estatística posterior.
 - HPO/Optuna.
 - Análise estatística final.
 - Reprocessamento ou recálculo dos resultados.
+]633;E;echo;6a73b01e-a66d-4c50-a9c7-d4d8c7729e6b]633;C
+---
+
+## Fase 9 — AutoGluon Default no Kaggle
+
+### Preparação da execução fragmentada
+
+**Arquivos:**
+- scripts/kaggle/run_fragmented_autogluon_default_blocks.sh
+- docs/KAGGLE_FRAGMENTED_EXECUTION_AUTOGLUON_DEFAULT.md
+- docs/FASE_09_AUTOGLUON_DEFAULT_KAGGLE.md
+
+**Motivação:** após a Fase 8, os resultados de Baselines + RealMLP/group_model já estavam coletados e validados localmente em results/raw_train.csv e results/raw_test.csv, mas o AutoGluon Default ainda não havia sido incorporado à execução completa dos 30 datasets.
+
+**Diagnóstico:** o arquivo results/autogluon.csv existente foi identificado como parcial/piloto, contendo apenas 2 datasets, portanto não deve ser usado como resultado oficial da fase.
+
+**Decisão técnica:** o runner src/pipeline/run_autogluon.py já suportava execução por --task-ids, preset default, separação treino/teste, checkpoint/resume, time_limit=600 e modelo identificado como autogluon_default. Portanto, o runner principal não foi alterado nesta fase.
+
+**Solução:** criado script de execução fragmentada para AutoGluon Default, dividido em 6 blocos de 5 datasets, salvando os resultados esperados em /kaggle/working/results/autogluon_default_train.csv e /kaggle/working/results/autogluon_default_test.csv.
+
+**Validação local:** a venv foi recriada no caminho atual do projeto com Python 3.11.15; as dependências foram sincronizadas com uv sync; o script foi validado com bash -n.
+
+**Regra mantida:** nos CSVs brutos, group_model permanece como group_model. Em tabelas finais, gráficos, relatório e slides, group_model deve aparecer como RealMLP.
