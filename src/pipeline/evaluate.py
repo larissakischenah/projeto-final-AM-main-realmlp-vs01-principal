@@ -50,6 +50,45 @@ def g_mean_score(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     return float(np.exp(np.mean(np.log(np.clip(recalls, 1e-12, 1.0)))))
 
 
+def evaluate_fitted_estimator(
+    estimator: Any,
+    X: pd.DataFrame,
+    y: np.ndarray,
+    classes: np.ndarray,
+    fit_time_s: float = 0.0,
+) -> EvaluationResult:
+    """Avalia um estimador já treinado em uma partição específica."""
+    t0 = time.perf_counter()
+    y_pred = estimator.predict(X)
+    if hasattr(estimator, "predict_proba"):
+        y_proba = estimator.predict_proba(X)
+    else:
+        y_proba = None
+    predict_time_s = time.perf_counter() - t0
+
+    multi_class = "ovo" if classes.size > 2 else "raise"
+    if y_proba is None:
+        auc = float("nan")
+        ce = float("nan")
+    else:
+        if classes.size == 2:
+            auc = float(roc_auc_score(y, y_proba[:, 1]))
+        else:
+            auc = float(
+                roc_auc_score(y, y_proba, multi_class=multi_class, labels=classes)
+            )
+        ce = float(log_loss(y, y_proba, labels=classes))
+
+    return EvaluationResult(
+        auc_ovo=auc,
+        accuracy=float(accuracy_score(y, y_pred)),
+        g_mean=g_mean_score(y, y_pred),
+        cross_entropy=ce,
+        fit_time_s=fit_time_s,
+        predict_time_s=predict_time_s,
+    )
+
+
 def fit_predict_evaluate(
     estimator: Any,
     X_train: pd.DataFrame,
@@ -57,38 +96,20 @@ def fit_predict_evaluate(
     X_test: pd.DataFrame,
     y_test: np.ndarray,
 ) -> EvaluationResult:
-    """Treina e avalia um estimador, medindo tempos de fit e predict."""
+    """Treina e avalia um estimador no conjunto de teste.
+
+    Mantida por compatibilidade com notebooks e scripts existentes.
+    Para separar treino/teste, use evaluate_fitted_estimator após o fit.
+    """
     t0 = time.perf_counter()
     estimator.fit(X_train, y_train)
     fit_time_s = time.perf_counter() - t0
 
-    t0 = time.perf_counter()
-    y_pred = estimator.predict(X_test)
-    if hasattr(estimator, "predict_proba"):
-        y_proba = estimator.predict_proba(X_test)
-    else:
-        y_proba = None
-    predict_time_s = time.perf_counter() - t0
-
     classes = np.unique(np.concatenate([y_train, y_test]))
-    multi_class = "ovo" if classes.size > 2 else "raise"
-    if y_proba is None:
-        auc = float("nan")
-        ce = float("nan")
-    else:
-        if classes.size == 2:
-            auc = float(roc_auc_score(y_test, y_proba[:, 1]))
-        else:
-            auc = float(
-                roc_auc_score(y_test, y_proba, multi_class=multi_class, labels=classes)
-            )
-        ce = float(log_loss(y_test, y_proba, labels=classes))
-
-    return EvaluationResult(
-        auc_ovo=auc,
-        accuracy=float(accuracy_score(y_test, y_pred)),
-        g_mean=g_mean_score(y_test, y_pred),
-        cross_entropy=ce,
+    return evaluate_fitted_estimator(
+        estimator=estimator,
+        X=X_test,
+        y=y_test,
+        classes=classes,
         fit_time_s=fit_time_s,
-        predict_time_s=predict_time_s,
     )

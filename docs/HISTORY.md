@@ -267,3 +267,16 @@ Etapa 2 — logs e temporários:
 
 Os itens `.venv/`, `results/`, `cache/` e `AutogluonModels/` já estavam cobertos
 pelo template original.
+
+## Correção científica — separação treino/teste nas métricas
+
+- Separada a avaliação dos modelos em dois artefatos explícitos:
+  - `results/raw_train.csv`: métricas calculadas no conjunto de treinamento, usadas como base da estatística principal.
+  - `results/raw_test.csv`: métricas calculadas no conjunto de teste, usadas apenas como análise complementar de generalização.
+- Mantido o split estratificado 70/30 implementado em `src/pipeline/split.py`.
+- Ajustado `src/pipeline/evaluate.py` para permitir avaliar um estimador já treinado em diferentes partições, sem treinar o modelo duas vezes.
+- Ajustado `src/pipeline/run_all.py` para treinar uma vez, avaliar em treino e teste, e salvar checkpoints separados.
+- Mantida compatibilidade legada com `--output`, que quando informado salva também as métricas de teste no caminho indicado.
+- Ajustado `notebooks/04_demo_stats_regime.ipynb` para usar `results/raw_train.csv` como base da análise estatística principal.
+- Preservado `results/raw_test.csv` como evidência complementar de generalização.
+
