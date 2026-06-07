@@ -371,7 +371,7 @@ def main() -> None:
                     f"ACC={test_metrics.accuracy:.4f} "
                     f"G-Mean={test_metrics.g_mean:.4f} "
                     f"CE={test_metrics.cross_entropy:.4f} "
-                    f"time={test_metrics.total_time_s:.1f}s",
+                    f"time={fit_time_s + test_metrics.predict_time_s:.1f}s",
                     flush=True,
                 )
 
